@@ -15,11 +15,11 @@
 #include <vector>
 double temp = 0.0f;
 
-Game::Game() : m_level("level1.png", "WolfCollection.png")
+Game::Game() : m_level("level1.png", "WolfCollection.png"), m_player(Vector3f(0, 0.4375f, 0))
 {
-  Transform::setProjection(70.0f, (float)Window::getWidth(),
-                           (float)Window::getHeight(), 0.1f, 100.0f);
-  Transform::setCamera(m_camera);
+  Transform::setProjection(70.0f, (float)Window::getWidth(), (float)Window::getHeight(), 0.1f,
+                           100.0f);
+  Transform::setCamera(m_player.getCamera());
 }
 
 Game::~Game()
@@ -28,14 +28,18 @@ Game::~Game()
 
 void Game::input()
 {
-  Transform::getCamera().input();
+  m_level.input();
+  m_player.input();
 }
 
 void Game::update()
 {
+  m_level.update();
+  m_player.update();
 }
 
 void Game::render()
 {
   m_level.render();
+  m_player.render();
 }

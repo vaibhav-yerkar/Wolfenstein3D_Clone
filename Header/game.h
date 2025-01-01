@@ -7,6 +7,7 @@
 #include "level.h"
 #include "lighting.h"
 #include "mesh.h"
+#include "player.h"
 #include "shader.h"
 #include "transform.h"
 
@@ -21,6 +22,7 @@ public:
 
 protected:
 private:
+  Player m_player;
   Level m_level;
   Mesh m_mesh;
   Shader* m_shader;

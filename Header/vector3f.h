@@ -25,6 +25,10 @@ public:
 
   Vector3f& normalize();
 
+  void setX(float value);
+  void setY(float value);
+  void setZ(float value);
+
   Vector3f& operator+=(const Vector3f& r);
   Vector3f& operator-=(const Vector3f& r);
   Vector3f& operator*=(float f);

@@ -141,3 +141,18 @@ inline bool Vector3f::operator!=(const Vector3f& r) const
 {
   return !operator==(r);
 }
+
+void Vector3f::setX(float value)
+{
+  this->x = value;
+}
+
+void Vector3f::setY(float value)
+{
+  this->y = value;
+}
+
+void Vector3f::setZ(float value)
+{
+  this->z = value;
+}
