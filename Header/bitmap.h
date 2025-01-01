@@ -13,7 +13,7 @@ public:
   Bitmap& flipX();
   Bitmap& flipY();
 
-  int getWidht();
+  int getWidth();
   int getHeight();
   const std::vector<int> getPixels() const;
   int getPixel(int x, int y) const;

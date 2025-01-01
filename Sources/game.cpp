@@ -15,7 +15,7 @@
 #include <vector>
 double temp = 0.0f;
 
-Game::Game() : m_level("level1.png", "WolfCollection.png"), m_player(Vector3f(0, 0.4375f, 0))
+Game::Game() : m_level("level1.png", "WolfCollection.png"), m_player(Vector3f(6, 0.4375f, 6))
 {
   Transform::setProjection(70.0f, (float)Window::getWidth(), (float)Window::getHeight(), 0.1f,
                            100.0f);
@@ -35,11 +35,22 @@ void Game::input()
 void Game::update()
 {
   m_level.update();
-  m_player.update();
+  m_player.update(m_level);
 }
 
 void Game::render()
 {
   m_level.render();
   m_player.render();
+}
+
+Game& Game::getInstance()
+{
+  static Game instance;
+  return instance;
+}
+
+Level& Game::getLevel()
+{
+  return m_level;
 }

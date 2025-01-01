@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL_surface.h>
+#include <algorithm>
 #include <cstdint>
 #include <iostream>
 #include <sys/types.h>
@@ -19,8 +20,7 @@ Bitmap::Bitmap(const std::string& fileName)
   SDL_Surface* image = IMG_Load(("../res/bitmaps/" + fileName).c_str());
   if (!image)
   {
-    std::cerr << "Failed to load image : " << fileName << "\n"
-              << IMG_GetError() << std::endl;
+    std::cerr << "Failed to load image : " << fileName << "\n" << IMG_GetError() << std::endl;
   }
   m_width = image->w;
   m_height = image->h;
@@ -32,6 +32,13 @@ Bitmap::Bitmap(const std::string& fileName)
     m_pixels[i] = pixels[i];
   }
   SDL_FreeSurface(image);
+}
+
+Bitmap::Bitmap(const Bitmap& other)
+{
+  m_width = other.m_width;
+  m_height = other.m_height;
+  m_pixels = other.m_pixels;
 }
 
 Bitmap& Bitmap::flipX()
@@ -92,7 +99,7 @@ Bitmap& Bitmap::operator=(Bitmap* other)
   return *this;
 }
 
-int Bitmap::getWidht()
+int Bitmap::getWidth()
 {
   return m_width;
 }

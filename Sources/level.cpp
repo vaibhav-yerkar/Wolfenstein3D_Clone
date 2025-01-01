@@ -6,7 +6,7 @@
 #include <vector>
 
 const static float SPOT_WIDTH = 1.0f;
-const static float SPOT_LEGHT = 1.0f;
+const static float SPOT_LENGTH = 1.0f;
 const static float SPOT_HEIGHT = 1.0f;
 const static int NUM_TEXTURE_EXP = 4;
 const static int NUM_TEXTURE = (int)pow(2, NUM_TEXTURE_EXP);
@@ -36,6 +36,35 @@ void Level::render()
   m_shader->updateUniforms(m_transform.getTransformation(),
                            m_transform.getProjectedTransformation(), m_material);
   m_mesh.draw();
+}
+
+Vector3f Level::checkCollision(Vector3f& oldPos, Vector3f& newPos, float objWidth, float objLength)
+{
+  Vector2f collisionVector(1, 1);
+  Vector3f movementVector = newPos - oldPos;
+
+  if (movementVector.length() > 0)
+  {
+    Vector2f blockSize(SPOT_WIDTH, SPOT_LENGTH);
+    Vector2f objectSize(objWidth, objLength);
+
+    Vector2f oldPos2(oldPos.getX(), oldPos.getZ());
+    Vector2f newPos2(newPos.getX(), newPos.getZ());
+
+    for (int i = 0; i < m_level.getWidth(); i++)
+    {
+      for (int j = 0; j < m_level.getHeight(); j++)
+      {
+        if ((m_level.getPixel(i, j) & 0xFFFFFF) == 0)
+        {
+          collisionVector = collisionVector * rectCollide(oldPos2, newPos2, objectSize,
+                                                          blockSize * Vector2f(i, j), blockSize);
+        }
+      }
+    }
+  }
+
+  return Vector3f(collisionVector.getX(), 0, collisionVector.getY());
 }
 
 void Level::addFace(std::vector<int>& indices, int startLocation, bool direction)
@@ -81,38 +110,38 @@ void Level::addVertices(std::vector<Vertex>& vertices, int i, int j, float offse
 {
   if (x && z)
   {
-    vertices.push_back(Vertex(Vector3f(i * SPOT_WIDTH, offset * SPOT_HEIGHT, j * SPOT_LEGHT),
+    vertices.push_back(Vertex(Vector3f(i * SPOT_WIDTH, offset * SPOT_HEIGHT, j * SPOT_LENGTH),
                               Vector2f(texCoord[1], texCoord[3])));
-    vertices.push_back(Vertex(Vector3f((i + 1) * SPOT_WIDTH, offset * SPOT_HEIGHT, j * SPOT_LEGHT),
+    vertices.push_back(Vertex(Vector3f((i + 1) * SPOT_WIDTH, offset * SPOT_HEIGHT, j * SPOT_LENGTH),
                               Vector2f(texCoord[0], texCoord[3])));
     vertices.push_back(
-        Vertex(Vector3f((i + 1) * SPOT_WIDTH, offset * SPOT_HEIGHT, (j + 1) * SPOT_LEGHT),
+        Vertex(Vector3f((i + 1) * SPOT_WIDTH, offset * SPOT_HEIGHT, (j + 1) * SPOT_LENGTH),
                Vector2f(texCoord[0], texCoord[2])));
-    vertices.push_back(Vertex(Vector3f(i * SPOT_WIDTH, offset * SPOT_HEIGHT, (j + 1) * SPOT_LEGHT),
+    vertices.push_back(Vertex(Vector3f(i * SPOT_WIDTH, offset * SPOT_HEIGHT, (j + 1) * SPOT_LENGTH),
                               Vector2f(texCoord[1], texCoord[2])));
   }
   else if (x && y)
   {
-    vertices.push_back(Vertex(Vector3f(i * SPOT_WIDTH, j * SPOT_HEIGHT, offset * SPOT_LEGHT),
+    vertices.push_back(Vertex(Vector3f(i * SPOT_WIDTH, j * SPOT_HEIGHT, offset * SPOT_LENGTH),
                               Vector2f(texCoord[1], texCoord[3])));
-    vertices.push_back(Vertex(Vector3f((i + 1) * SPOT_WIDTH, j * SPOT_HEIGHT, offset * SPOT_LEGHT),
+    vertices.push_back(Vertex(Vector3f((i + 1) * SPOT_WIDTH, j * SPOT_HEIGHT, offset * SPOT_LENGTH),
                               Vector2f(texCoord[0], texCoord[3])));
     vertices.push_back(
-        Vertex(Vector3f((i + 1) * SPOT_WIDTH, (j + 1) * SPOT_HEIGHT, offset * SPOT_LEGHT),
+        Vertex(Vector3f((i + 1) * SPOT_WIDTH, (j + 1) * SPOT_HEIGHT, offset * SPOT_LENGTH),
                Vector2f(texCoord[0], texCoord[2])));
-    vertices.push_back(Vertex(Vector3f(i * SPOT_WIDTH, (j + 1) * SPOT_HEIGHT, offset * SPOT_LEGHT),
+    vertices.push_back(Vertex(Vector3f(i * SPOT_WIDTH, (j + 1) * SPOT_HEIGHT, offset * SPOT_LENGTH),
                               Vector2f(texCoord[1], texCoord[2])));
   }
   else if (y && z)
   {
-    vertices.push_back(Vertex(Vector3f(offset * SPOT_WIDTH, i * SPOT_HEIGHT, j * SPOT_LEGHT),
+    vertices.push_back(Vertex(Vector3f(offset * SPOT_WIDTH, i * SPOT_HEIGHT, j * SPOT_LENGTH),
                               Vector2f(texCoord[1], texCoord[3])));
-    vertices.push_back(Vertex(Vector3f(offset * SPOT_WIDTH, i * SPOT_HEIGHT, (j + 1) * SPOT_LEGHT),
+    vertices.push_back(Vertex(Vector3f(offset * SPOT_WIDTH, i * SPOT_HEIGHT, (j + 1) * SPOT_LENGTH),
                               Vector2f(texCoord[0], texCoord[3])));
     vertices.push_back(
-        Vertex(Vector3f(offset * SPOT_WIDTH, (i + 1) * SPOT_HEIGHT, (j + 1) * SPOT_LEGHT),
+        Vertex(Vector3f(offset * SPOT_WIDTH, (i + 1) * SPOT_HEIGHT, (j + 1) * SPOT_LENGTH),
                Vector2f(texCoord[0], texCoord[2])));
-    vertices.push_back(Vertex(Vector3f(offset * SPOT_WIDTH, (i + 1) * SPOT_HEIGHT, j * SPOT_LEGHT),
+    vertices.push_back(Vertex(Vector3f(offset * SPOT_WIDTH, (i + 1) * SPOT_HEIGHT, j * SPOT_LENGTH),
                               Vector2f(texCoord[1], texCoord[2])));
   }
   else
@@ -127,7 +156,7 @@ void Level::generateLevel()
   std::vector<int> indices;
   std::vector<Vertex> vertices;
 
-  for (int i = 0; i < m_level.getWidht(); i++)
+  for (int i = 0; i < m_level.getWidth(); i++)
   {
     for (int j = 0; j < m_level.getHeight(); j++)
     {
@@ -174,4 +203,24 @@ void Level::generateLevel()
   int* intArray = indices.data();
 
   m_mesh.addVertices(vertArray, vertices.size(), intArray, indices.size());
+}
+
+Vector2f Level::rectCollide(Vector2f oldPos, Vector2f newPos, Vector2f size1, Vector2f pos2,
+                            Vector2f size2)
+{
+  Vector2f res = Vector2f(0, 0);
+
+  if (newPos.getX() + size1.getX() < pos2.getX() ||
+      newPos.getX() - size1.getX() > pos2.getX() + size2.getX() * size2.getX() ||
+      oldPos.getY() + size1.getY() < pos2.getY() ||
+      oldPos.getY() - size1.getY() > pos2.getY() + size2.getY() * size2.getY())
+    res.setX(1);
+
+  if (oldPos.getX() + size1.getX() < pos2.getX() ||
+      oldPos.getX() - size1.getX() > pos2.getX() + size2.getX() * size2.getX() ||
+      newPos.getY() + size1.getY() < pos2.getY() ||
+      newPos.getY() - size1.getY() > pos2.getY() + size2.getY() * size2.getY())
+    res.setY(1);
+
+  return res;
 }

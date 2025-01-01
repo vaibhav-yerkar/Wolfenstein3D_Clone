@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include "camera.h"
+#include "level.h"
 #include "vector3f.h"
 
 class Player
@@ -10,7 +11,7 @@ public:
   Player(Vector3f pos);
 
   void input();
-  void update();
+  void update(Level& m_level);
   void render();
 
   Camera& getCamera();

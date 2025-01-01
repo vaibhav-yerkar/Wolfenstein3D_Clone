@@ -29,6 +29,10 @@ public:
   void setY(float value);
   void setZ(float value);
 
+  float getX() const;
+  float getY() const;
+  float getZ() const;
+
   Vector3f& operator+=(const Vector3f& r);
   Vector3f& operator-=(const Vector3f& r);
   Vector3f& operator*=(float f);
@@ -38,6 +42,8 @@ public:
   Vector3f operator-(const Vector3f& r) const;
   Vector3f operator*(float f) const;
   Vector3f operator/(float f) const;
+
+  Vector3f mult(const Vector3f& r);
 
   inline bool operator==(const Vector3f& r) const;
   inline bool operator!=(const Vector3f& r) const;

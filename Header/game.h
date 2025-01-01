@@ -20,6 +20,9 @@ public:
   void update();
   void render();
 
+  static Game& getInstance();
+  Level& getLevel();
+
 protected:
 private:
   Player m_player;

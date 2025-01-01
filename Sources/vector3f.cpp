@@ -156,3 +156,24 @@ void Vector3f::setZ(float value)
 {
   this->z = value;
 }
+
+float Vector3f::getX() const
+{
+  return this->x;
+}
+
+float Vector3f::getY() const
+{
+  return this->y;
+}
+
+float Vector3f::getZ() const
+{
+  return this->z;
+}
+
+Vector3f Vector3f::mult(const Vector3f& r)
+{
+  Vector3f ret = Vector3f(x * r.getX(), y * r.getY(), z * r.getZ());
+  return ret;
+}

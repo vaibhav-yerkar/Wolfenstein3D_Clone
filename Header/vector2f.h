@@ -13,6 +13,12 @@ public:
     this->y = y;
   }
 
+  float getX();
+  float getY();
+
+  void setX(float value);
+  void setY(float value);
+
   Vector2f& operator+=(const Vector2f& r);
   Vector2f& operator-=(const Vector2f& r);
   Vector2f& operator*=(float f);
@@ -22,6 +28,8 @@ public:
   Vector2f operator-(const Vector2f& r) const;
   Vector2f operator*(float f) const;
   Vector2f operator/(float f) const;
+
+  Vector2f operator*(const Vector2f& other);
 
   inline bool operator==(const Vector2f& r) const;
   inline bool operator!=(const Vector2f& r) const;
