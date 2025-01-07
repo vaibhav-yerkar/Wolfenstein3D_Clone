@@ -8,13 +8,15 @@ class Texture
 {
 public:
   Texture(const std::string& fileName, GLenum textureTarget = GL_TEXTURE_2D,
-          GLfloat filter = GL_LINEAR);
+          GLfloat filter = GL_NEAREST);
   Texture(int width = 0, int height = 0, unsigned char* data = 0,
           GLenum textureTarget = GL_TEXTURE_2D, GLfloat filter = GL_LINEAR);
   ~Texture();
 
   void bind(GLenum textureUnit = GL_TEXTURE0);
   Texture(Texture& texture);
+
+  GLuint getID();
 
   Texture& operator=(Texture&& other);
   void operator=(Texture& texture);
@@ -27,8 +29,8 @@ private:
   GLuint m_textureID;
   bool m_freeTexture;
 
-  void initTexture(int width, int height, unsigned char* data,
-                   GLenum textureTarget, GLfloat filter);
+  void initTexture(int width, int height, unsigned char* data, GLenum textureTarget,
+                   GLfloat filter);
 };
 
 #endif

@@ -4,12 +4,11 @@
 
 Texture* Texture::m_lastBind = 0;
 
-Texture::Texture(const std::string& fileName, GLenum textureTarget,
-                 GLfloat filter)
+Texture::Texture(const std::string& fileName, GLenum textureTarget, GLfloat filter)
 {
   int x, y, numComponents;
-  unsigned char* data = stbi_load(("../res/texture/" + fileName).c_str(), &x,
-                                  &y, &numComponents, 4);
+  unsigned char* data =
+      stbi_load(("../res/texture/" + fileName).c_str(), &x, &y, &numComponents, 4);
   if (data == NULL)
   {
     std::cerr << "Unable to load texture: " << fileName << std::endl;
@@ -19,14 +18,13 @@ Texture::Texture(const std::string& fileName, GLenum textureTarget,
   stbi_image_free(data);
 }
 
-Texture::Texture(int width, int height, unsigned char* data,
-                 GLenum textureTarget, GLfloat filter)
+Texture::Texture(int width, int height, unsigned char* data, GLenum textureTarget, GLfloat filter)
 {
   initTexture(width, height, data, textureTarget, filter);
 }
 
-void Texture::initTexture(int width, int height, unsigned char* data,
-                          GLenum textureTarget, GLfloat filter)
+void Texture::initTexture(int width, int height, unsigned char* data, GLenum textureTarget,
+                          GLfloat filter)
 {
   m_textureTarget = textureTarget;
   m_freeTexture = true;
@@ -39,8 +37,7 @@ void Texture::initTexture(int width, int height, unsigned char* data,
     glTexParameterf(textureTarget, GL_TEXTURE_MAG_FILTER, filter);
     glTexParameterf(textureTarget, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameterf(textureTarget, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexImage2D(textureTarget, 0, GL_RGBA, width, height, 0, GL_RGBA,
-                 GL_UNSIGNED_BYTE, data);
+    glTexImage2D(textureTarget, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
   }
   else
   {
@@ -88,4 +85,9 @@ void Texture::bind(GLenum textureUnit)
     glBindTexture(m_textureTarget, m_textureID);
     m_lastBind = this;
   }
+}
+
+GLuint Texture::getID()
+{
+  return m_textureID;
 }

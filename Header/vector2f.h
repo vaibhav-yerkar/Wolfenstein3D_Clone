@@ -13,11 +13,17 @@ public:
     this->y = y;
   }
 
-  float getX();
-  float getY();
+  float getX() const;
+  float getY() const;
+
+  float length() const;
+
+  Vector2f rotate(float angle);
 
   void setX(float value);
   void setY(float value);
+
+  Vector2f& normalize();
 
   Vector2f& operator+=(const Vector2f& r);
   Vector2f& operator-=(const Vector2f& r);
@@ -29,10 +35,10 @@ public:
   Vector2f operator*(float f) const;
   Vector2f operator/(float f) const;
 
-  Vector2f operator*(const Vector2f& other);
+  Vector2f mult(const Vector2f& other);
 
-  inline bool operator==(const Vector2f& r) const;
-  inline bool operator!=(const Vector2f& r) const;
+  bool operator==(const Vector2f& r) const;
+  bool operator!=(const Vector2f& r) const;
 
 protected:
 private:

@@ -6,6 +6,8 @@
 class Time
 {
 public:
+  static const long SECOND = 1000000000L;
+
   static double getTime();
   static double getDelta();
 

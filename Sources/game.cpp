@@ -1,56 +1,58 @@
 #include "../Header/game.h"
-#include "../Header/basicShader.h"
-#include "../Header/bitmap.h"
-#include "../Header/custom_time.h"
-#include "../Header/input.h"
-#include "../Header/phongShader.h"
-#include "../Header/texture.h"
-#include "../Header/util.h"
 #include "../Header/window.h"
 
-#include <algorithm>
-#include <cmath>
-#include <iostream>
 #include <math.h>
-#include <vector>
 double temp = 0.0f;
 
-Game::Game() : m_level("level1.png", "WolfCollection.png"), m_player(Vector3f(6, 0.4375f, 6))
-{
-  Transform::setProjection(70.0f, (float)Window::getWidth(), (float)Window::getHeight(), 0.1f,
-                           100.0f);
-  Transform::setCamera(m_player.getCamera());
-}
+Level* Game::m_level = nullptr;
+bool Game::isRunning = false;
+int Game::levelNum = 0;
 
-Game::~Game()
+Game::Game()
 {
+  loadNextLevel();
 }
 
 void Game::input()
 {
-  m_level.input();
-  m_player.input();
+  if (m_level)
+    m_level->input();
 }
 
 void Game::update()
 {
-  m_level.update();
-  m_player.update(m_level);
+  if (isRunning && m_level)
+    m_level->update();
 }
 
 void Game::render()
 {
-  m_level.render();
-  m_player.render();
+  if (isRunning && m_level)
+    m_level->render();
 }
 
-Game& Game::getInstance()
+void Game::loadNextLevel()
 {
-  static Game instance;
-  return instance;
+  levelNum++;
+  std::string levelFile = "level" + std::to_string(levelNum) + ".png";
+  std::string collectionFile = "WolfCollection.png";
+
+  delete m_level;
+  m_level = new Level(levelFile, collectionFile);
+
+  Transform::setProjection(70.0f, (float)Window::getWidth(), (float)Window::getHeight(), 0.1f,
+                           100.0f);
+  Transform::setCamera(m_level->getPlayer()->getCamera());
+
+  isRunning = true;
 }
 
-Level& Game::getLevel()
+Level* Game::getLevel()
 {
   return m_level;
+}
+
+void Game::setIsRunning(bool value)
+{
+  isRunning = value;
 }

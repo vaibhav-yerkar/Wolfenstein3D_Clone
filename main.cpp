@@ -9,7 +9,7 @@
 const static int WIDTH = 800;
 const static int HEIGHT = 600;
 const static char* TITLE = "3D Engine";
-const static double FRAME_CAP = 3000.0;
+const static double FRAME_CAP = 2000.0;
 const static bool IGNORE_FRAME_CAP = true;
 
 Main::Main()
@@ -63,7 +63,7 @@ void Main::run()
 
     if (frameCounter >= 1.0)
     {
-      printf("%i\n", frames);
+      // printf("%i\n", frames);
       frames = 0;
       frameCounter = 0;
     }

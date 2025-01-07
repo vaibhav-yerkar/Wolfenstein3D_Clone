@@ -10,8 +10,7 @@ class Transform
 public:
   static Camera& getCamera();
   static void setCamera(Camera& camera);
-  static void setProjection(float fov, float width, float height, float zNear,
-                            float zFar);
+  static void setProjection(float fov, float width, float height, float zNear, float zFar);
 
   Transform(Vector3f pos = Vector3f(0, 0, 0), Vector3f rot = Vector3f(0, 0, 0),
             Vector3f scale = Vector3f(1, 1, 1));
@@ -19,6 +18,10 @@ public:
 
   Matrix4f getTransformation();
   Matrix4f getProjectedTransformation();
+
+  const Vector3f& getPos() const;
+  const Vector3f& getRot() const;
+  const Vector3f& getScale() const;
 
   Vector3f& getPos();
   Vector3f& getRot();
