@@ -116,7 +116,7 @@ void Monster::idleUpdate(const Vector3f& orientation, float direction)
   else
   {
     m_material.setTexture(m_animations[1]);
-    if (canLook)
+    if (direction < SHOOT_DISTANCE)
     {
       Vector2f lineStart(m_transform.getPos().getX(), m_transform.getPos().getZ());
       Vector2f castDirection(orientation.getX(), orientation.getZ());
@@ -158,7 +158,8 @@ void Monster::chaseUpdate(const Vector3f& orientation, float distance)
     m_material.setTexture(m_animations[3]);
   }
 
-  if (std::generate_canonical<double, 10000000000>(m_rand) < ATTACK_CHANCE * Time::getDelta())
+  // if (std::generate_canonical<double, 10000000000>(m_rand) < ATTACK_CHANCE * Time::getDelta())
+  if (distance <= MOVEMENT_STOP_DISTANCE)
   {
     state = STATE_ATTACK;
   }
