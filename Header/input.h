@@ -91,8 +91,8 @@ typedef enum
   KEY_PRINTSCREEN = 70,
   KEY_SCROLLLOCK = 71,
   KEY_PAUSE = 72,
-  KEY_INSERT = 73, /**< insert on PC, help on some Mac keyboards (but
-                                 does send code 73, not 117) */
+  KEY_INSERT = 73,
+
   KEY_HOME = 74,
   KEY_PAGEUP = 75,
   KEY_DELETE = 76,
@@ -103,8 +103,8 @@ typedef enum
   KEY_DOWN = 81,
   KEY_UP = 82,
 
-  KEY_NUMLOCKCLEAR = 83, /**< num lock on PC, clear on Mac keyboards
-                          */
+  KEY_NUMLOCKCLEAR = 83,
+
   KEY_KP_DIVIDE = 84,
   KEY_KP_MULTIPLY = 85,
   KEY_KP_MINUS = 86,
@@ -123,7 +123,7 @@ typedef enum
   KEY_KP_PERIOD = 99,
 
   KEY_NONUSBACKSLASH = 100,
-  KEY_APPLICATION = 101, /**< windows contextual menu, compose */
+  KEY_APPLICATION = 101,
   KEY_POWER = 102,
 
   KEY_KP_EQUALS = 103,
@@ -144,7 +144,7 @@ typedef enum
   KEY_MENU = 118,
   KEY_SELECT = 119,
   KEY_STOP = 120,
-  KEY_AGAIN = 121, /**< redo */
+  KEY_AGAIN = 121,
   KEY_UNDO = 122,
   KEY_CUT = 123,
   KEY_COPY = 124,
@@ -156,10 +156,9 @@ typedef enum
   KEY_KP_COMMA = 133,
   KEY_KP_EQUALSAS400 = 134,
 
-  KEY_INTERNATIONAL1 = 135, /**< used on Asian keyboards, see
-                                          footnotes in USB doc */
+  KEY_INTERNATIONAL1 = 135,
   KEY_INTERNATIONAL2 = 136,
-  KEY_INTERNATIONAL3 = 137, /**< Yen */
+  KEY_INTERNATIONAL3 = 137,
   KEY_INTERNATIONAL4 = 138,
   KEY_INTERNATIONAL5 = 139,
   KEY_INTERNATIONAL6 = 140,

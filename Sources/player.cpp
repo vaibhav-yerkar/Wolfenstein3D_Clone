@@ -26,8 +26,8 @@ static const float TEX_MAX_X = -1 - OFFSET_X;
 static const float TEX_MIN_Y = -OFFSET_Y;
 static const float TEX_MAX_Y = 1 - OFFSET_Y;
 
-static const float MOUSE_SENSITIVITY = 0.5f;
-static const float MOVE_SPEED = 3.5f;
+static const float MOUSE_SENSITIVITY = 0.35f;
+static const float MOVE_SPEED = 4.5f;
 
 static const float SHOOT_DISTANCE = 1000.0f;
 static const int DAMAGE_MIN = 20;
