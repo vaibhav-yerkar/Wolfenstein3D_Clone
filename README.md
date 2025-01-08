@@ -1,5 +1,9 @@
 # WOLFENSTEIN 3D CLONE
 
+## ScreenShot
+
+![GamePlay ScreenShot](./res/gameplay.png)
+
 ## BUILD DEPENDENCIED
 
 - CMAKE
