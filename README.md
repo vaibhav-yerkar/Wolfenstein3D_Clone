@@ -1,6 +1,6 @@
 # WOLFENSTEIN 3D CLONE
 
-## ScreenShot
+## GamePlay Screenshot
 
 ![GamePlay ScreenShot](./res/gameplay.png)
 
