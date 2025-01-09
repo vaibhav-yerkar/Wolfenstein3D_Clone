@@ -4,6 +4,7 @@
 #include "bitmap.h"
 #include "door.h"
 #include "material.h"
+#include "medkit.h"
 #include "mesh.h"
 #include "monster.h"
 #include "player.h"
@@ -34,6 +35,7 @@ public:
 
   void openDoors(Vector3f pos, bool tryExitLevel);
   void damagePlayer(int amount);
+  void removeMedkit(Medkit* medkit);
 
 protected:
 private:
@@ -57,9 +59,13 @@ private:
 
   std::vector<Door*> m_doors;
   std::vector<Monster*> m_monsters;
+
+  std::vector<Medkit> m_medkits;
   std::vector<Vector3f> exitPoints;
   std::vector<Vector2f> collisionPosStart;
   std::vector<Vector2f> collisionPosEnd;
+
+  std::vector<Medkit*> m_medkitsToRemove;
 
   Transform m_transform;
   Player m_player;

@@ -61,7 +61,16 @@ void Level::update()
 
   for (Monster* monster : m_monsters)
     monster->update();
-
+  for (Medkit& medkit : m_medkits)
+    medkit.update();
+  m_medkits.erase(std::remove_if(m_medkits.begin(), m_medkits.end(),
+                                 [this](const Medkit& medkit)
+                                 {
+                                   return std::find(m_medkitsToRemove.begin(),
+                                                    m_medkitsToRemove.end(),
+                                                    &medkit) != m_medkitsToRemove.end();
+                                 }),
+                  m_medkits.end());
   m_player.update();
 }
 
@@ -79,6 +88,10 @@ void Level::render()
   for (Monster* monster : m_monsters)
   {
     monster->render();
+  }
+  for (Medkit& medkit : m_medkits)
+  {
+    medkit.render();
   }
   m_player.render();
 }
@@ -105,6 +118,8 @@ void Level::addSpecial(int blueValue, int x, int y)
     monsterTransform.setPos(Vector3f((x + 0.5f) * SPOT_WIDTH, 0, (y + 0.5f) * SPOT_LENGTH));
     m_monsters.push_back(new Monster(monsterTransform));
   }
+  if (blueValue == 192)
+    m_medkits.push_back(Medkit(Vector3f((x + 0.5f) * SPOT_WIDTH, 0, (y + 0.5f) * SPOT_LENGTH)));
   if (blueValue == 97)
     exitPoints.push_back(Vector3f((x + 0.5f) * SPOT_WIDTH, 0, (y + 0.5f) * SPOT_LENGTH));
 }
@@ -453,4 +468,9 @@ Vector2f Level::lineIntersect(const Vector2f& lineStart1, const Vector2f& lineEn
 float Level::Vector2fCross(const Vector2f& a, const Vector2f& b)
 {
   return a.getX() * b.getY() - a.getY() * b.getX();
+}
+
+void Level::removeMedkit(Medkit* medkit)
+{
+  m_medkitsToRemove.emplace_back(medkit);
 }

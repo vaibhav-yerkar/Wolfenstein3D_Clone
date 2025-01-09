@@ -2,6 +2,7 @@
 #include "../Header/game.h"
 #include "../Header/util.h"
 #include <iostream>
+#include <ostream>
 #include <vector>
 
 static const float SCALE = 0.7f;
@@ -34,7 +35,7 @@ static const float SHOT_ANGLE = 10.0f;
 static const float ATTACK_CHANCE = 0.75f;
 static const int MAX_HEALTH = 100;
 static const int DAMAGE_MIN = 5;
-static const int DAMAGE_MAX = 30;
+static const int DAMAGE_MAX = 20;
 
 Mesh* Monster::m_mesh = nullptr;
 std::vector<Texture*> Monster::m_animations;
@@ -105,10 +106,10 @@ void Monster::damage(int amount)
 
 void Monster::idleUpdate(const Vector3f& orientation, float direction)
 {
-  double time = (double)Time::getTime() / (double)Time::SECOND;
+  double time = (double)Time::getTime();
   double timeDecimals = time - (int)time;
 
-  if (timeDecimals < 0.0000000005)
+  if (timeDecimals < 0.5)
   {
     canLook = true;
     m_material.setTexture(m_animations[0]);
@@ -138,18 +139,18 @@ void Monster::idleUpdate(const Vector3f& orientation, float direction)
 
 void Monster::chaseUpdate(const Vector3f& orientation, float distance)
 {
-  double time = (double)Time::getTime() / (double)Time::SECOND;
+  double time = (double)Time::getTime();
   double timeDecimals = time - (int)time;
 
-  if (timeDecimals < 0.0000000025)
+  if (timeDecimals < 0.25)
   {
     m_material.setTexture(m_animations[0]);
   }
-  else if (timeDecimals < 0.000000005)
+  else if (timeDecimals < 0.5)
   {
     m_material.setTexture(m_animations[1]);
   }
-  else if (timeDecimals < 0.0000000075)
+  else if (timeDecimals < 0.75)
   {
     m_material.setTexture(m_animations[2]);
   }
@@ -158,11 +159,8 @@ void Monster::chaseUpdate(const Vector3f& orientation, float distance)
     m_material.setTexture(m_animations[3]);
   }
 
-  // if (std::generate_canonical<double, 10000000000>(m_rand) < ATTACK_CHANCE * Time::getDelta())
-  if (distance <= MOVEMENT_STOP_DISTANCE)
-  {
+  if (std::generate_canonical<double, 10000000000>(m_rand) < ATTACK_CHANCE * Time::getDelta())
     state = STATE_ATTACK;
-  }
 
   if (distance > MOVEMENT_STOP_DISTANCE)
   {
@@ -193,18 +191,18 @@ void Monster::chaseUpdate(const Vector3f& orientation, float distance)
 
 void Monster::attackUpdate(const Vector3f& orientation, float distance)
 {
-  double time = (double)Time::getTime() / (double)Time::SECOND;
+  double time = (double)Time::getTime();
   double timeDecimals = time - static_cast<int>(time);
 
-  if (timeDecimals < 0.000000005)
+  if (timeDecimals < 0.25)
   {
     m_material.setTexture(m_animations[4]);
   }
-  else if (timeDecimals < 0.0000000075)
+  else if (timeDecimals < 0.5)
   {
     m_material.setTexture(m_animations[5]);
   }
-  else if (timeDecimals < 0.000000009)
+  else if (timeDecimals < 0.75)
   {
     m_material.setTexture(m_animations[6]);
 
@@ -235,24 +233,24 @@ void Monster::attackUpdate(const Vector3f& orientation, float distance)
   else
   {
     m_material.setTexture(m_animations[5]);
-    state = STATE_CHASE;
     canAttack = true;
+    state = STATE_CHASE;
   }
 }
 
 void Monster::dyingUpdate(const Vector3f& orientation, float distance)
 {
-  double time = (double)Time::getTime() / (double)Time::SECOND;
+  double time = (double)Time::getTime();
 
   if (deathTime == 0)
   {
     deathTime = time;
   }
 
-  float time1 = 0.0000000001f;
-  float time2 = 0.0000000003f;
-  float time3 = 0.00000000045f;
-  float time4 = 0.0000000006f;
+  float time1 = 0.1f;
+  float time2 = 0.3f;
+  float time3 = 0.45f;
+  float time4 = 0.6f;
 
   if (time < deathTime + time1)
   {

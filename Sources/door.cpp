@@ -9,8 +9,8 @@ static const float LENGTH = 1;
 static const float HEIGHT = 1;
 static const float WIDTH = 0.125f;
 static const float START = 0;
-static const double TIME_TO_OPEN = 0.0000000025;
-static const double CLOSE_DELAY = 0.000000003;
+static const double TIME_TO_OPEN = 1.0f;
+static const double CLOSE_DELAY = 2.0f;
 
 Mesh* Door::m_mesh = nullptr;
 
@@ -55,7 +55,7 @@ void Door::open()
   if (isOpening)
     return;
 
-  openingStartTime = (double)Time::getTime() / (double)Time::SECOND;
+  openingStartTime = (double)Time::getTime();
 
   openTime = openingStartTime + TIME_TO_OPEN;
   closingStartTime = openTime + CLOSE_DELAY;
@@ -68,7 +68,7 @@ void Door::update()
 {
   if (isOpening)
   {
-    double time = (double)Time::getTime() / (double)Time::SECOND;
+    double time = (double)Time::getTime();
     if (time < openTime)
     {
       getTransform().setPos(VectorLerp(m_closePosition, m_openPosition,
