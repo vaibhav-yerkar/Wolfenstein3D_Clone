@@ -6,6 +6,8 @@
 #include "../Header/util.h"
 #include "../Header/vector2f.h"
 #include "../Header/window.h"
+#include "SDL_render.h"
+#include "sdl_requests.h"
 #include <iostream>
 #include <ostream>
 #include <random>
@@ -48,6 +50,9 @@ Player::Player(const Vector3f& pos)
       centerPosition((float)Window::getWidth() / 2, (float)Window::getHeight() / 2),
       movementVector(Vector3f(0, 0, 0))
 {
+  system("clear");
+  std::cout << "Health : " << m_health << std::endl;
+
   bool isFiring = false;
   float gunFireTimer = 0.0f;
   if (!m_mesh)
@@ -77,6 +82,7 @@ void Player::damage(int amount)
     m_health = MAX_HEALTH;
   }
   system("clear");
+
   std::cout << "Health : " << m_health << std::endl;
 
   if (m_health <= 0)
@@ -219,6 +225,7 @@ void Player::render()
 
   shader->updateUniforms(gunTransform.getTransformation(),
                          gunTransform.getProjectedTransformation(), *gunMaterial);
+
   m_mesh->draw();
 }
 

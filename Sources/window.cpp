@@ -44,7 +44,6 @@ void Window::render()
 
 void Window::dispose()
 {
-  SDLDestroyRenderer();
   SDLDestroyWindow();
   SDL_Quit();
 }
