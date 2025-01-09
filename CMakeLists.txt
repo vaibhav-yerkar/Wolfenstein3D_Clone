@@ -16,10 +16,12 @@ find_package(GLEW 2 REQUIRED)
 find_library(SDL2_IMAGE_LIB SDL2_image HINTS /opt/homebrew/lib)
 find_path(SDL2_IMAGE_INCLUDE_DIR SDL_image.h HINTS /opt/homebrew/include/SDL2)
 
-# Ensure SDL2_image was found
+# Ensure SDL2_image were found
 if (NOT SDL2_IMAGE_LIB OR NOT SDL2_IMAGE_INCLUDE_DIR)
     message(FATAL_ERROR "SDL2_image not found")
 endif()
+
+
 
 file(GLOB_RECURSE SRC_FILES Sources/*.cpp Sources/*.c)
 add_executable(wolfenstein3D main.cpp ${SRC_FILES})

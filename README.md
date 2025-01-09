@@ -10,6 +10,7 @@
 - GLEW
 - GLM
 - SDL
+- SDL_IMAGE
 
 ## For installing depenndencies on Linux/Unix based OS (use your package manager):
 

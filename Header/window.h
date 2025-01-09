@@ -16,6 +16,7 @@ public:
   static const std::string& getTitle();
 
   static void setFullScreen(bool value);
+  static void renderText(const std::string& text, int x, int y);
 
 protected:
 private:

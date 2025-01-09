@@ -7,7 +7,10 @@
 #include "../Header/vector2f.h"
 #include "../Header/window.h"
 #include <iostream>
+#include <ostream>
 #include <random>
+#include <stdlib.h>
+#include <string>
 
 static const float GUN_OFFSET = -0.0875f;
 
@@ -26,8 +29,8 @@ static const float TEX_MAX_X = -1 - OFFSET_X;
 static const float TEX_MIN_Y = -OFFSET_Y;
 static const float TEX_MAX_Y = 1 - OFFSET_Y;
 
-static const float MOUSE_SENSITIVITY = 0.35f;
-static const float MOVE_SPEED = 4.5f;
+static const float MOUSE_SENSITIVITY = 0.25f;
+static const float MOVE_SPEED = 3.5f;
 
 static const float SHOOT_DISTANCE = 1000.0f;
 static const int DAMAGE_MIN = 20;
@@ -73,6 +76,7 @@ void Player::damage(int amount)
   {
     m_health = MAX_HEALTH;
   }
+  system("clear");
   std::cout << "Health : " << m_health << std::endl;
 
   if (m_health <= 0)
@@ -184,8 +188,14 @@ void Player::update()
 
   Vector3f collisionVector =
       Game::getLevel()->checkCollision(oldPos, newPos, PLAYER_SIZE, PLAYER_SIZE);
+
   if (collisionVector.getX() != 0 || collisionVector.getZ() != 0)
     movementVector = movementVector.mult(collisionVector);
+  if (collisionVector.getX() == 0 && collisionVector.getZ() == 0)
+  {
+    movementVector.setX(0);
+    movementVector.setZ(0);
+  }
 
   if (movementVector.length() > 0)
     m_camera.move(movementVector, movAmt);
