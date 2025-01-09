@@ -38,7 +38,7 @@ void Medkit::update()
       std::atan2(directionToCamera.getZ(), directionToCamera.getX()) * 180.0 / M_PI);
 
   if (directionToCamera.getX() < 0)
-    angleToFaceTheCamera += 180;
+    angleToFaceTheCamera += 360;
 
   transform.getRot().setY(angleToFaceTheCamera + 90);
 
