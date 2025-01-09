@@ -1,9 +1,5 @@
 #include "../Header/door.h"
-#include "../Header/custom_time.h"
 #include "../Header/game.h"
-#include "../Header/mesh.h"
-#include "../Header/util.h"
-#include <iostream>
 
 static const float LENGTH = 1;
 static const float HEIGHT = 1;

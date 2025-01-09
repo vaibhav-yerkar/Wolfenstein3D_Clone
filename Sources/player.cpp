@@ -1,13 +1,6 @@
 #include "../Header/player.h"
-#include "../Header/custom_time.h"
 #include "../Header/game.h"
-#include "../Header/input.h"
 #include "../Header/level.h"
-#include "../Header/util.h"
-#include "../Header/vector2f.h"
-#include "../Header/window.h"
-#include "SDL_render.h"
-#include "sdl_requests.h"
 #include <iostream>
 #include <ostream>
 #include <random>

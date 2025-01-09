@@ -1,6 +1,7 @@
 #ifndef MATRIX4F_H
 #define MATRIX4F_H
 
+#include "util.h"
 #include "vector3f.h"
 
 class Matrix4f
@@ -11,8 +12,7 @@ public:
   void initRotateTransform(float rotateX, float rotateY, float rotateZ);
   void initTranslationTransform(float x, float y, float z);
   void initCameraTransform(const Vector3f& target, const Vector3f& up);
-  void initPersProjTransform(float fov, float width, float height, float zNear,
-                             float zFar);
+  void initPersProjTransform(float fov, float width, float height, float zNear, float zFar);
 
   Matrix4f operator*(const Matrix4f& right) const;
   const float* operator[](int index) const;

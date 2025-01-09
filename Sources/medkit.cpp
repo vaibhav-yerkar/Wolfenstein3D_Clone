@@ -1,8 +1,5 @@
 #include "medkit.h"
 #include "../Header/game.h"
-#include "../Header/player.h"
-#include "../Header/shader.h"
-#include "../Header/util.h"
 
 Mesh* Medkit::m_mesh = nullptr;
 Material* Medkit::m_material = nullptr;
@@ -49,7 +46,7 @@ void Medkit::update()
     if (player->getHealth() < player->getMaxHealth())
     {
       Game::getLevel()->removeMedkit(this);
-      player->damage(-HEAL_AMOUNT); // Negative damage heals the player
+      player->damage(-HEAL_AMOUNT);
     }
   }
 }

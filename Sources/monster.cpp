@@ -1,8 +1,5 @@
 #include "../Header/monster.h"
 #include "../Header/game.h"
-#include "../Header/util.h"
-#include <iostream>
-#include <ostream>
 #include <vector>
 
 static const float SCALE = 0.7f;
@@ -10,9 +7,9 @@ static const float SIZEY = SCALE;
 static const float SIZEX = (float)((double)SIZEY / (1.9310344827586206896551724137931 * 2.0));
 static const float START = 0;
 
-static const float OFFSET_X = 0.0f;           // 0.05f
-static const float OFFSET_Y = 0.0f;           // 0.01f
-static const float OFFSET_FROM_GROUND = 0.0f; //-0.075f
+static const float OFFSET_X = 0.0f;
+static const float OFFSET_Y = 0.0f;
+static const float OFFSET_FROM_GROUND = 0.0f;
 
 static const float TEX_MIN_X = -OFFSET_X;
 static const float TEX_MAX_X = -1 - OFFSET_X;
@@ -35,7 +32,7 @@ static const float SHOT_ANGLE = 10.0f;
 static const float ATTACK_CHANCE = 0.75f;
 static const int MAX_HEALTH = 100;
 static const int DAMAGE_MIN = 5;
-static const int DAMAGE_MAX = 20;
+static const int DAMAGE_MAX = 25;
 
 Mesh* Monster::m_mesh = nullptr;
 std::vector<Texture*> Monster::m_animations;

@@ -1,6 +1,7 @@
 #ifndef MYINPUT_H
 #define MYINPUT_H
 
+#include "sdl_requests.h"
 #include "vector2f.h"
 
 typedef enum

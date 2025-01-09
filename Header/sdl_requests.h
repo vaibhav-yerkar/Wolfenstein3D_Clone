@@ -1,8 +1,6 @@
 #ifndef SDLREQUESTS_H
 #define SDLREQUESTS_H
 
-#include <SDL2/SDL.h>
-
 bool SDLGetIsCloseRequested();
 void SDLSetIsCloseRequested(bool value);
 void SDLCreateWindow(const char* title, int x, int y, int width, int height, bool fullscreen);

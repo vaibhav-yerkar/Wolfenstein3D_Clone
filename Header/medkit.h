@@ -4,7 +4,10 @@
 
 #include "material.h"
 #include "mesh.h"
+#include "player.h"
+#include "shader.h"
 #include "transform.h"
+#include "util.h"
 #include "vector3f.h"
 
 class Medkit

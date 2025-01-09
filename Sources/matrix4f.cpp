@@ -1,5 +1,4 @@
 #include "../Header/matrix4f.h"
-#include "../Header/util.h"
 #include <math.h>
 
 void Matrix4f::initIdentity()
@@ -174,8 +173,7 @@ void Matrix4f::initCameraTransform(const Vector3f& target, const Vector3f& up)
   m[3][3] = 1.0f;
 }
 
-void Matrix4f::initPersProjTransform(float fov, float width, float height,
-                                     float zNear, float zFar)
+void Matrix4f::initPersProjTransform(float fov, float width, float height, float zNear, float zFar)
 {
   const float ar = width / height;
   const float zRange = zNear - zFar;
@@ -209,8 +207,8 @@ Matrix4f Matrix4f::operator*(const Matrix4f& right) const
   {
     for (unsigned int j = 0; j < 4; j++)
     {
-      ret.m[i][j] = m[i][0] * right.m[0][j] + m[i][1] * right.m[1][j] +
-                    m[i][2] * right.m[2][j] + m[i][3] * right.m[3][j];
+      ret.m[i][j] = m[i][0] * right.m[0][j] + m[i][1] * right.m[1][j] + m[i][2] * right.m[2][j] +
+                    m[i][3] * right.m[3][j];
     }
   }
   return ret;

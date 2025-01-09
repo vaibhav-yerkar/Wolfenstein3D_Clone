@@ -6,6 +6,7 @@
 #include "mesh.h"
 #include "texture.h"
 #include "transform.h"
+#include "util.h"
 #include "vector2f.h"
 #include "vector3f.h"
 

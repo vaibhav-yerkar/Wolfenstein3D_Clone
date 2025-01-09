@@ -2,11 +2,15 @@
 #define PLAYER_H
 
 #include "camera.h"
+#include "custom_time.h"
+#include "input.h"
 #include "material.h"
 #include "mesh.h"
 #include "transform.h"
+#include "util.h"
 #include "vector2f.h"
 #include "vector3f.h"
+#include "window.h"
 #include <random>
 
 class Player

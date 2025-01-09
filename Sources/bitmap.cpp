@@ -1,12 +1,10 @@
 #include "../Header/bitmap.h"
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL_surface.h>
-#include <algorithm>
-#include <cstdint>
 #include <iostream>
 #include <sys/types.h>
-#include <vector>
 
 Bitmap::Bitmap(int width, int height)
 {

@@ -1,7 +1,10 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include "custom_time.h"
+#include "input.h"
 #include "vector3f.h"
+#include "window.h"
 
 class Camera
 {

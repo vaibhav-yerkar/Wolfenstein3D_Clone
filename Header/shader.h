@@ -7,6 +7,7 @@
 
 #include "material.h"
 #include "matrix4f.h"
+#include "util.h"
 #include "vector3f.h"
 
 class Shader
@@ -25,8 +26,7 @@ public:
   void addFragmentShader(const std::string& text);
   void compileShader();
 
-  virtual void updateUniforms(const Matrix4f& worldMatrix,
-                              const Matrix4f& projectedMatrix,
+  virtual void updateUniforms(const Matrix4f& worldMatrix, const Matrix4f& projectedMatrix,
                               Material& material);
 
   void setUniformi(const std::string& name, int value);

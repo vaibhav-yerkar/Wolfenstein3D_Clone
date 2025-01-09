@@ -1,10 +1,12 @@
 #ifndef DOOR_H
 #define DOOR_H
 
+#include "custom_time.h"
 #include "material.h"
 #include "mesh.h"
 #include "shader.h"
 #include "transform.h"
+#include "util.h"
 #include "vector2f.h"
 #include "vector3f.h"
 
