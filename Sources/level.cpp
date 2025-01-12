@@ -1,6 +1,7 @@
 #include "../Header/level.h"
 #include "../Header/basicShader.h"
 #include "../Header/game.h"
+#include "window.h"
 #include <cstdlib>
 #include <iostream>
 #include <ostream>
@@ -22,6 +23,7 @@ Level::Level(const std::string& levelName, const std::string& textureName)
   m_material = Material(&m_texture);
   m_shader = BasicShader::getInstance();
   generateLevel();
+  Window::playSound("Guten_Tag.wav");
 }
 
 void Level::openDoors(Vector3f pos, bool tryExitLevel)

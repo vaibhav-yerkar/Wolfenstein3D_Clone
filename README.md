@@ -12,6 +12,7 @@ This project is a recreation of the classic **Wolfenstein 3D** game built using 
 - 🌟 OpenGL-based rendering for enhanced graphics performance.
 - 🧹 Clean and reusable SDL2 wrapper for better code management.
 - 🕹️ Smooth player movement and collision detection.
+- 🎶 Audio support with SDL_mixer for sound effects and music.
 
 ---
 
@@ -28,6 +29,7 @@ This project is a recreation of the classic **Wolfenstein 3D** game built using 
 - **C++ Compiler**: GCC, Clang, or MSVC with support for C++11 or newer.
 - **SDL2**: For window management and input handling.
 - **SDL_image**: For rendering images.
+- **SDL_mixer**: For audio support (sound effects and music).
 - **OpenGL**: For rendering graphics (requires OpenGL 4.1 or newer).
 - **GLEW**: For managing OpenGL extensions.
 - **GLM**: For OpenGL math-operations.
@@ -45,14 +47,14 @@ This project is a recreation of the classic **Wolfenstein 3D** game built using 
 
    - **Linux (Debian-based)**:
      ```bash
-     sudo apt install libsdl2-dev libsdl2-image-dev libglew-dev libglm-dev
+     sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libglew-dev libglm-dev
      ```
    - **macOS**:
      ```bash
-     brew install sdl2 sdl2_image glew glm
+     brew install sdl2 sdl2_image glew glm sdl2_mixer
      ```
    - **Windows**:
-     - Download SDL2 and SDL_image development libraries from their official websites.
+     - Download SDL2 and SDL_image, SDL_mixer development libraries from their official websites.
      - Configure your IDE (e.g., Visual Studio) with the include and library paths.
 
 3. **Build the project**:
@@ -79,6 +81,7 @@ This project is a recreation of the classic **Wolfenstein 3D** game built using 
 
 - **SDL2**: Window creation, input handling, and game loop management.
 - **SDL_image**: image rendering .
+- **SDL_mixer**: Audio support (sound effects and music).
 - **OpenGL**: Rendering walls, sprites, and game objects.
 - **GLEW**: OpenGL extension management.
 - **C++ Standard Library**: Core utilities and STL.
@@ -95,14 +98,13 @@ This project is a recreation of the classic **Wolfenstein 3D** game built using 
    - Check if textures and shaders are loaded correctly.
 
 2. **Compilation Errors**:
-   - Ensure all dependencies (SDL2, SDL_ttf, OpenGL, GLEW) are installed.
+   - Ensure all dependencies (SDL2, SDL_ttf, OpenGL, GLEW, SDL_mixer) are installed.
    - Verify include and library paths for your compiler.
 
 ---
 
 ## **Future Improvements**
 
-- 🎵 Add audio support using **SDL_mixer**.
 - 🔄 Improve collision detection for smoother gameplay.
 - 💡 Add lighting effects and shading for realism.
 

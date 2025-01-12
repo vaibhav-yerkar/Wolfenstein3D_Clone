@@ -1,6 +1,7 @@
 #include "../Header/player.h"
 #include "../Header/game.h"
 #include "../Header/level.h"
+#include "window.h"
 #include <iostream>
 #include <ostream>
 #include <random>
@@ -43,7 +44,7 @@ Player::Player(const Vector3f& pos)
       centerPosition((float)Window::getWidth() / 2, (float)Window::getHeight() / 2),
       movementVector(Vector3f(0, 0, 0))
 {
-  system("clear");
+  // system("clear");
   std::cout << "Health : " << m_health << std::endl;
 
   bool isFiring = false;
@@ -69,6 +70,14 @@ Player::Player(const Vector3f& pos)
 
 void Player::damage(int amount)
 {
+  if (amount > 0)
+  {
+    Window::playSound("PlayerPain.wav", Window::PLAYER_HEALTH_CHANNEL);
+  }
+  else
+  {
+    Window::playSound("Health.wav", Window::PLAYER_HEALTH_CHANNEL);
+  }
   m_health -= amount;
   if (m_health > MAX_HEALTH)
   {
@@ -80,6 +89,7 @@ void Player::damage(int amount)
 
   if (m_health <= 0)
   {
+    Window::playSound("Player_Dies.wav", Window::PLAYER_DEATH_CHANNEL);
     Game::setIsRunning(false);
     std::cout << "You Just Died ! GAME OVER!" << std::endl;
   }
@@ -126,6 +136,8 @@ void Player::input()
       isFiring = true;
       gunFireTimer = GUN_FIRE_DURATION;
       gunMaterial = new Material(new Texture("PISFA0.png"));
+
+      Window::playSound("Pistol.wav", Window::PLAYER_FIRE_CHANNEL);
 
       Vector2f lineStart(m_camera.getPos().getX(), m_camera.getPos().getZ());
       Vector2f castDirection(m_camera.getForward().getX(), m_camera.getForward().getZ());
@@ -195,10 +207,11 @@ void Player::update()
     movementVector.setX(0);
     movementVector.setZ(0);
   }
-
   if (movementVector.length() > 0)
+  {
+    Window::playSound("PlayerWalk.wav", Window::PLAYER_WALK_CHANNEL);
     m_camera.move(movementVector, movAmt);
-
+  }
   gunTransform.setPos(m_camera.getPos() + m_camera.getForward().normalize() * 0.105f);
   gunTransform.getPos().setY(gunTransform.getPos().getY() + GUN_OFFSET);
 

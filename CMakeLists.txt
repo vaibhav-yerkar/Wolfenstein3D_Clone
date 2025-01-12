@@ -16,11 +16,19 @@ find_package(GLEW 2 REQUIRED)
 find_library(SDL2_IMAGE_LIB SDL2_image HINTS /opt/homebrew/lib)
 find_path(SDL2_IMAGE_INCLUDE_DIR SDL_image.h HINTS /opt/homebrew/include/SDL2)
 
+
 # Ensure SDL2_image were found
 if (NOT SDL2_IMAGE_LIB OR NOT SDL2_IMAGE_INCLUDE_DIR)
     message(FATAL_ERROR "SDL2_image not found")
 endif()
 
+# Find SDL2_mixer
+find_library(SDL2_MIXER_LIB SDL2_mixer HINTS /opt/homebrew/lib)
+find_path(SDL2_MIXER_INCLUDE_DIR SDL_mixer.h HINTS /opt/homebrew/include/SDL2)
+
+if (NOT SDL2_MIXER_LIB OR NOT SDL2_MIXER_INCLUDE_DIR)
+    message(FATAL_ERROR "SDL2_mixer not found")
+endif()
 
 
 file(GLOB_RECURSE SRC_FILES Sources/*.cpp Sources/*.c)
@@ -32,12 +40,14 @@ target_include_directories(wolfenstein3D PUBLIC
   ${SDL2_INCLUDE_DIR} 
   ${GLM_INCLUDE_DIR} 
   ${SDL2_IMAGE_INCLUDE_DIR}
+  ${SDL2_MIXER_INCLUDE_DIR}
   ${GLEW_INCLUDE_DIR}
 )
 # Link libraries
 target_link_libraries(wolfenstein3D PUBLIC 
   ${SDL2_LIBRARIES} 
   ${SDL2_IMAGE_LIB}
+  ${SDL2_MIXER_LIB}
   ${GLM_LIBRARIES} 
   ${GLEW_LIBRARIES} 
   "-framework OpenGL"

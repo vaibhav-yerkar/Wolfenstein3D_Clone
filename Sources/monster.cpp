@@ -1,5 +1,6 @@
 #include "../Header/monster.h"
 #include "../Header/game.h"
+#include "window.h"
 #include <vector>
 
 static const float SCALE = 0.7f;
@@ -94,6 +95,7 @@ void Monster::damage(int amount)
   {
     state = STATE_CHASE;
   }
+  Window::playSound("EnemyPain_2.wav", Window::MONSTER_HEALTH_CHANNEL);
   health -= amount;
   if (health <= 0)
   {
@@ -205,6 +207,7 @@ void Monster::attackUpdate(const Vector3f& orientation, float distance)
 
     if (canAttack)
     {
+      Window::playSound("Machine_Gun.wav", Window::MONSTER_FIRE_CHANNEL);
       Vector2f lineStart(m_transform.getPos().getX(), m_transform.getPos().getZ());
       Vector2f castDirection(orientation.getX(), orientation.getZ());
       castDirection =
@@ -256,6 +259,7 @@ void Monster::dyingUpdate(const Vector3f& orientation, float distance)
   }
   else if (time < deathTime + time2)
   {
+    Window::playSound("Enemy_Dies.wav", Window::MONSTER_HEALTH_CHANNEL);
     m_material.setTexture(m_animations[9]);
     m_transform.setScale(Vector3f(1.7f, 0.9f, 1));
   }

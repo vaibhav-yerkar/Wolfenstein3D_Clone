@@ -5,7 +5,7 @@ static const float LENGTH = 1;
 static const float HEIGHT = 1;
 static const float WIDTH = 0.125f;
 static const float START = 0;
-static const double TIME_TO_OPEN = 1.0f;
+static const double TIME_TO_OPEN = 2.5f;
 static const double CLOSE_DELAY = 2.0f;
 
 Mesh* Door::m_mesh = nullptr;
@@ -67,6 +67,7 @@ void Door::update()
     double time = (double)Time::getTime();
     if (time < openTime)
     {
+      Window::playSound("Door.wav", Window::DOOR_OPEN_CHANNEL);
       getTransform().setPos(VectorLerp(m_closePosition, m_openPosition,
                                        (float)((time - openingStartTime) / TIME_TO_OPEN)));
     }
@@ -78,6 +79,7 @@ void Door::update()
     {
       getTransform().setPos(VectorLerp(m_openPosition, m_closePosition,
                                        (float)((time - closingStartTime) / TIME_TO_OPEN)));
+      Window::playSound("Door.wav", Window::DOOR_CLOSE_CHANNEL);
     }
     else
     {
