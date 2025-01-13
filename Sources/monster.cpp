@@ -207,7 +207,7 @@ void Monster::attackUpdate(const Vector3f& orientation, float distance)
 
     if (canAttack)
     {
-      Window::playSound("Machine_Gun.wav", Window::MONSTER_FIRE_CHANNEL);
+      Window::playSound("Machine_Gun.wav", Window::MONSTER_FIRE_CHANNEL, 0.4f);
       Vector2f lineStart(m_transform.getPos().getX(), m_transform.getPos().getZ());
       Vector2f castDirection(orientation.getX(), orientation.getZ());
       castDirection =

@@ -72,11 +72,11 @@ void Player::damage(int amount)
 {
   if (amount > 0)
   {
-    Window::playSound("PlayerPain.wav", Window::PLAYER_HEALTH_CHANNEL);
+    Window::playSound("PlayerPain.wav", Window::PLAYER_HEALTH_CHANNEL, 0.7f);
   }
   else
   {
-    Window::playSound("Health.wav", Window::PLAYER_HEALTH_CHANNEL);
+    Window::playSound("Health.wav", Window::PLAYER_HEALTH_CHANNEL, 0.5f);
   }
   m_health -= amount;
   if (m_health > MAX_HEALTH)
@@ -137,7 +137,7 @@ void Player::input()
       gunFireTimer = GUN_FIRE_DURATION;
       gunMaterial = new Material(new Texture("PISFA0.png"));
 
-      Window::playSound("Pistol.wav", Window::PLAYER_FIRE_CHANNEL);
+      Window::playSound("Pistol.wav", Window::PLAYER_FIRE_CHANNEL, 0.65f);
 
       Vector2f lineStart(m_camera.getPos().getX(), m_camera.getPos().getZ());
       Vector2f castDirection(m_camera.getForward().getX(), m_camera.getForward().getZ());

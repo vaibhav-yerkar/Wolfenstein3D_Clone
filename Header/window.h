@@ -26,7 +26,7 @@ public:
 
   static void setFullScreen(bool value);
 
-  static void playSound(const std::string& fileName, int channel = -1);
+  static void playSound(const std::string& fileName, int channel = -1, float volume = 1.0f);
 
 protected:
 private:

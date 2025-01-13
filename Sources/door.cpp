@@ -67,7 +67,7 @@ void Door::update()
     double time = (double)Time::getTime();
     if (time < openTime)
     {
-      Window::playSound("Door.wav", Window::DOOR_OPEN_CHANNEL);
+      Window::playSound("Door.wav", Window::DOOR_OPEN_CHANNEL, 0.45f);
       getTransform().setPos(VectorLerp(m_closePosition, m_openPosition,
                                        (float)((time - openingStartTime) / TIME_TO_OPEN)));
     }
@@ -79,7 +79,7 @@ void Door::update()
     {
       getTransform().setPos(VectorLerp(m_openPosition, m_closePosition,
                                        (float)((time - closingStartTime) / TIME_TO_OPEN)));
-      Window::playSound("Door.wav", Window::DOOR_CLOSE_CHANNEL);
+      Window::playSound("Door.wav", Window::DOOR_CLOSE_CHANNEL, 0.45f);
     }
     else
     {

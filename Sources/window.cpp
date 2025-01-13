@@ -89,16 +89,18 @@ const std::string& Window::getTitle()
   return m_title;
 }
 
-void Window::playSound(const std::string& fileName, int channel)
+void Window::playSound(const std::string& fileName, int channel, float volume)
 {
   std::string filePath = "../res/audio/" + fileName;
   Mix_Chunk* sound = Mix_LoadWAV(filePath.c_str());
+
   if (!sound)
   {
     std::cerr << "Failed to load sound: " << Mix_GetError() << std::endl;
     Mix_CloseAudio();
     return;
   }
+  Mix_MasterVolume(volume * MIX_MAX_VOLUME);
   if ((channel == PLAYER_FIRE_CHANNEL || channel == MONSTER_FIRE_CHANNEL))
   {
     Mix_PlayChannel(channel, sound, 0);
