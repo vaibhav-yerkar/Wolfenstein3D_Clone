@@ -18,6 +18,8 @@ public:
   const float* operator[](int index) const;
   float* operator[](int index);
 
+  static Matrix4f createTranslationTransform(float x, float y, float z);
+
 protected:
 private:
   float m[4][4];

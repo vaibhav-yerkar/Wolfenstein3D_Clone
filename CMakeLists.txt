@@ -11,6 +11,7 @@ project(wolfenstein3D VERSION 1.0)
 find_package(SDL2 2 REQUIRED)
 find_package(GLM 1 REQUIRED)
 find_package(GLEW 2 REQUIRED)
+find_package(Freetype REQUIRED)
 
 # Find SDL2_image
 find_library(SDL2_IMAGE_LIB SDL2_image HINTS /opt/homebrew/lib)
@@ -30,6 +31,8 @@ if (NOT SDL2_MIXER_LIB OR NOT SDL2_MIXER_INCLUDE_DIR)
     message(FATAL_ERROR "SDL2_mixer not found")
 endif()
 
+set(RESOURCE_PATH "${CMAKE_SOURCE_DIR}/res")
+add_compile_definitions(RESOURCE_PATH="${RESOURCE_PATH}")
 
 file(GLOB_RECURSE SRC_FILES Sources/*.cpp Sources/*.c)
 add_executable(wolfenstein3D main.cpp ${SRC_FILES})
@@ -40,6 +43,7 @@ target_include_directories(wolfenstein3D PUBLIC
   ${SDL2_INCLUDE_DIR} 
   ${GLM_INCLUDE_DIR} 
   ${SDL2_IMAGE_INCLUDE_DIR}
+  ${FREETYPE_INCLUDE_DIRS}
   ${SDL2_MIXER_INCLUDE_DIR}
   ${GLEW_INCLUDE_DIR}
 )
@@ -48,6 +52,7 @@ target_link_libraries(wolfenstein3D PUBLIC
   ${SDL2_LIBRARIES} 
   ${SDL2_IMAGE_LIB}
   ${SDL2_MIXER_LIB}
+  ${FREETYPE_LIBRARIES}
   ${GLM_LIBRARIES} 
   ${GLEW_LIBRARIES} 
   "-framework OpenGL"

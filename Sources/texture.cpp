@@ -7,8 +7,8 @@ Texture* Texture::m_lastBind = 0;
 Texture::Texture(const std::string& fileName, GLenum textureTarget, GLfloat filter)
 {
   int x, y, numComponents;
-  unsigned char* data =
-      stbi_load(("../res/texture/" + fileName).c_str(), &x, &y, &numComponents, 4);
+  unsigned char* data = stbi_load((std::string(RESOURCE_PATH) + "/texture/" + fileName).c_str(), &x,
+                                  &y, &numComponents, 4);
   if (data == NULL)
   {
     std::cerr << "Unable to load texture: " << fileName << std::endl;

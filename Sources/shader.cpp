@@ -167,7 +167,7 @@ static void checkShaderError(int shader, int flag, bool isProgram, const std::st
 static std::shared_ptr<std::string> loadShader(const std::string& fileName)
 {
   std::ifstream file;
-  file.open("../res/shader/" + fileName);
+  file.open(std::string(RESOURCE_PATH) + "/shader/" + fileName);
 
   std::shared_ptr<std::string> output(new std::string());
   std::string line;

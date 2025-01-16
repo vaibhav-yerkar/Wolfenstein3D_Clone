@@ -1,6 +1,8 @@
 #ifndef GAMEWINDOW_H
 #define GAMEWINDOW_H
 
+#include "vector2f.h"
+#include "vector3f.h"
 #include <string>
 
 class Window

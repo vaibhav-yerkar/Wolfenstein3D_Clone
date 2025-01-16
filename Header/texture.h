@@ -10,7 +10,7 @@ public:
   Texture(const std::string& fileName, GLenum textureTarget = GL_TEXTURE_2D,
           GLfloat filter = GL_NEAREST);
   Texture(int width = 0, int height = 0, unsigned char* data = 0,
-          GLenum textureTarget = GL_TEXTURE_2D, GLfloat filter = GL_LINEAR);
+          GLenum textureTarget = GL_TEXTURE_2D, GLfloat filter = GL_NEAREST);
   ~Texture();
 
   void bind(GLenum textureUnit = GL_TEXTURE0);

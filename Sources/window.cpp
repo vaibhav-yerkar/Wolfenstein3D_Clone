@@ -1,5 +1,6 @@
 #include "../Header/window.h"
 #include "../Header/sdl_requests.h"
+
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
@@ -91,7 +92,7 @@ const std::string& Window::getTitle()
 
 void Window::playSound(const std::string& fileName, int channel, float volume)
 {
-  std::string filePath = "../res/audio/" + fileName;
+  std::string filePath = std::string(RESOURCE_PATH) + "/audio/" + fileName;
   Mix_Chunk* sound = Mix_LoadWAV(filePath.c_str());
 
   if (!sound)

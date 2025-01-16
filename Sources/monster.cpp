@@ -1,14 +1,15 @@
 #include "../Header/monster.h"
 #include "../Header/game.h"
+#include "transform.h"
 #include "window.h"
 #include <vector>
 
 static const float SCALE = 0.7f;
 static const float SIZEY = SCALE;
 static const float SIZEX = (float)((double)SIZEY / (1.9310344827586206896551724137931 * 2.0));
-static const float START = 0;
+static const float START = 0.0;
 
-static const float OFFSET_X = 0.0f;
+static const float OFFSET_X = 0.00f;
 static const float OFFSET_Y = 0.0f;
 static const float OFFSET_FROM_GROUND = 0.0f;
 

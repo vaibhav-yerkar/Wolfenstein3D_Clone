@@ -223,3 +223,10 @@ float* Matrix4f::operator[](int index)
 {
   return m[index];
 }
+
+Matrix4f Matrix4f::createTranslationTransform(float x, float y, float z)
+{
+  Matrix4f mat;
+  mat.initTranslationTransform(x, y, z);
+  return mat;
+}

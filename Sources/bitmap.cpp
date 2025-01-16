@@ -15,7 +15,7 @@ Bitmap::Bitmap(int width, int height)
 
 Bitmap::Bitmap(const std::string& fileName)
 {
-  SDL_Surface* image = IMG_Load(("../res/bitmaps/" + fileName).c_str());
+  SDL_Surface* image = IMG_Load((std::string(RESOURCE_PATH) + "/bitmaps/" + fileName).c_str());
   if (!image)
   {
     std::cerr << "Failed to load image : " << fileName << "\n" << IMG_GetError() << std::endl;

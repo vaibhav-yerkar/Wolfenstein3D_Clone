@@ -3,6 +3,7 @@
 
 #include "custom_time.h"
 #include "material.h"
+#include "matrix4f.h"
 #include "mesh.h"
 #include "texture.h"
 #include "transform.h"
