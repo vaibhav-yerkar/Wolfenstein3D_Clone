@@ -16,11 +16,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up CMake
-        uses: actions/setup-cmake@v2
-
       - name: Install dependencies
-        run: sudo apt-get install -y libsdl2-dev libsdl2_image-dev libsdl2_mixer-dev lib-glew-dev libglm-dev
+        run: sudo apt-get install -y libsdl2-dev libsdl2_image-dev libsdl2_mixer-dev lib-glew-dev libglm-dev cmake
 
       - name: Build Project
         run: |
@@ -39,11 +36,8 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Set up CMake
-        uses: actions/setup-cmake@v2
-
       - name: Install dependencies
-        run: brew install sdl2 sdl2_image sdl2_mixer glew glm
+        run: brew install sdl2 sdl2_image sdl2_mixer glew glm cmake
 
       - name: Build Project
         run: |
@@ -62,11 +56,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Set up Code
-        uses: actions/setup-cmake@v2
-
       - name: Install dependencies
-        run: choco install sdl2 sdl2_image sdl2_mixer glew glm
+        run: |
+          choco install sdl2
+          choco install cmake
+          choco install sdl2_mixer
+          choco install sdl2_image
+          choco install glew
+          choco install glm
 
       - name: Build Project
         run: |
