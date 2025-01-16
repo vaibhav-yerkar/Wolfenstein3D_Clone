@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install dependencies
-        run: sudo apt-get install -y libsdl2-dev libsdl2_image-dev libsdl2_mixer-dev lib-glew-dev libglm-dev cmake
+        run: sudo apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libglew-dev libglm-dev cmake
 
       - name: Build Project
         run: |
@@ -28,6 +28,7 @@ jobs:
 
       - name: Run the game (Linux)
         run: |
+          cd build
           ./wolfenstein3D
 
   test-macos:
@@ -48,6 +49,7 @@ jobs:
 
       - name: Run the game (MacOS)
         run: |
+          cd build
           ./wolfenstein3D
 
   test-windows:
@@ -56,22 +58,26 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Install dependencies
+      - name: Set up vcpkg
         run: |
-          choco install sdl2
-          choco install cmake
-          choco install sdl2_mixer
-          choco install sdl2_image
-          choco install glew
-          choco install glm
+          git clone https://github.com/microsoft/vcpkg.git
+          cd vcpkg
+          ./bootstrap-vcpkg.bat
+          ./vcpkg integrate install
+          cd ..
+
+      - name: Install dependencies via vcpkg
+        run: |
+          ./vcpkg/vcpkg install sdl2 sdl2-image sdl2-mixer glew glm
 
       - name: Build Project
         run: |
           mkdir build
           cd build
-          cmake ../
+          cmake -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake ..          
           cmake --build . --config Release
 
       - name: Run the game (Windows)
         run: |
+          cd build
           .\wolfenstein3D.exe
