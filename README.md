@@ -47,7 +47,7 @@ This project is a recreation of the classic **Wolfenstein 3D** game built using 
 
    - **Linux (Debian-based)**:
      ```bash
-     sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libglew-dev libglm-dev
+     sudo apt install libsdl2-dev libsdl2_image-dev libsdl2_mixer-dev libglew-dev libglm-dev
      ```
    - **macOS**:
      ```bash

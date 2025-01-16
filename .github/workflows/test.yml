@@ -1,0 +1,80 @@
+name: Cross-platform Testing
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up CMake
+        uses: actions/setup-cmake@v2
+
+      - name: Install dependencies
+        run: sudo apt-get install -y libsdl2-dev libsdl2_image-dev libsdl2_mixer-dev lib-glew-dev libglm-dev
+
+      - name: Build Project
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+
+      - name: Run the game (Linux)
+        run: |
+          ./wolfenstein3D
+
+  test-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up CMake
+        uses: actions/setup-cmake@v2
+
+      - name: Install dependencies
+        run: brew install sdl2 sdl2_image sdl2_mixer glew glm
+
+      - name: Build Project
+        run: |
+          mkdir build
+          cd build
+          cmake ../
+          make
+
+      - name: Run the game (MacOS)
+        run: |
+          ./wolfenstein3D
+
+  test-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up Code
+        uses: actions/setup-cmake@v2
+
+      - name: Install dependencies
+        run: choco install sdl2 sdl2_image sdl2_mixer glew glm
+
+      - name: Build Project
+        run: |
+          mkdir build
+          cd build
+          cmake ../
+          cmake --build . --config Release
+
+      - name: Run the game (Windows)
+        run: |
+          .\wolfenstein3D.exe
