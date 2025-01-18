@@ -19,7 +19,7 @@ add_compile_definitions(RESOURCE_PATH="${RESOURCE_PATH}")
 # Find Required dependencies
 find_package(SDL2 REQUIRED)
 find_package(GLM REQUIRED)
-find_package(GLEW REQUIRED)
+find_package(GLEW 2 REQUIRED)
 find_package(Freetype REQUIRED)
 
 # Find SDL2_image
