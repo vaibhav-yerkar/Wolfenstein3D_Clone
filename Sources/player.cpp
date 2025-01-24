@@ -169,7 +169,7 @@ void Player::input()
     if (rotY)
       m_camera.rotateY(deltaPos.x * MOUSE_SENSITIVITY);
     if (rotX)
-      m_camera.rotateX(deltaPos.y * MOUSE_SENSITIVITY);
+      m_camera.rotateX(deltaPos.y * MOUSE_SENSITIVITY * 0);
 
     if (rotY || rotX)
       Input::setMousePosition(centerPosition);
