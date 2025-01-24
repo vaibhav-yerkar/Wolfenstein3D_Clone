@@ -3,7 +3,7 @@
 
 const static int WIDTH = 800;
 const static int HEIGHT = 600;
-const static char* TITLE = "3D Engine";
+const static char* TITLE = "Wolfenstein 3D";
 const static double FRAME_CAP = 100.0;
 const static bool IGNORE_FRAME_CAP = true;
 

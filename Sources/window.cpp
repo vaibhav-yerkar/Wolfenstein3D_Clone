@@ -1,5 +1,6 @@
 #include "../Header/window.h"
 #include "../Header/sdl_requests.h"
+#include "util.h"
 
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
@@ -7,15 +8,15 @@
 
 #include <iostream>
 
-int Window::m_width = 0;
-int Window::m_height = 0;
-std::string Window::m_title = "Title";
+int Window::s_width = 0;
+int Window::s_height = 0;
+std::string Window::s_title = "Title";
 
 void Window::create(int width, int height, const std::string& title)
 {
-  Window::m_width = width;
-  Window::m_height = height;
-  Window::m_title = title;
+  Window::s_width = width;
+  Window::s_height = height;
+  Window::s_title = title;
 
   SDL_Init(SDL_INIT_VIDEO);
 
@@ -77,17 +78,17 @@ void Window::setFullScreen(bool value)
 
 int Window::getWidth()
 {
-  return m_width;
+  return s_width;
 }
 
 int Window::getHeight()
 {
-  return m_height;
+  return s_height;
 }
 
 const std::string& Window::getTitle()
 {
-  return m_title;
+  return s_title;
 }
 
 void Window::playSound(const std::string& fileName, int channel, float volume)

@@ -23,16 +23,15 @@ public:
   static int getWidth();
   static int getHeight();
   static const std::string& getTitle();
-
   static void setFullScreen(bool value);
 
   static void playSound(const std::string& fileName, int channel = -1, float volume = 1.0f);
 
 protected:
 private:
-  static int m_width;
-  static int m_height;
-  static std::string m_title;
+  static int s_width;
+  static int s_height;
+  static std::string s_title;
 };
 
 #endif
