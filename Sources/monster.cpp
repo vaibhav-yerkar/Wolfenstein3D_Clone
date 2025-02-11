@@ -96,7 +96,8 @@ void Monster::damage(int amount)
   {
     state = STATE_CHASE;
   }
-  Window::playSound("EnemyPain_2.wav", Window::MONSTER_HEALTH_CHANNEL);
+  if (state != STATE_DEAD)
+    Window::playSound("EnemyPain_2.wav", Window::MONSTER_HEALTH_CHANNEL);
   health -= amount;
   if (health <= 0)
   {
