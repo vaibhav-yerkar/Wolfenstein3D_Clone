@@ -1,4 +1,4 @@
-#include "../Header/shader.h"
+#include "shader.h"
 #include <GL/glew.h>
 #include <cassert>
 #include <cstdio>
@@ -7,7 +7,8 @@
 #include <memory>
 #include <vector>
 
-static void checkShaderError(int shader, int flag, bool isProgram, const std::string& errorMessage);
+static void checkShaderError(int shader, int flag, bool isProgram,
+                             const std::string& errorMessage);
 static std::shared_ptr<std::string> loadShader(const std::string& fileName);
 
 Shader::Shader()
@@ -23,7 +24,8 @@ Shader::Shader()
 
 Shader::~Shader()
 {
-  for (std::vector<int>::iterator it = m_shaders.begin(); it != m_shaders.end(); ++it)
+  for (std::vector<int>::iterator it = m_shaders.begin(); it != m_shaders.end();
+       ++it)
   {
     glDetachShader(m_program, *it);
     glDeleteShader(*it);
@@ -112,14 +114,16 @@ void Shader::addProgram(const std::string& text, int type)
 void Shader::compileShader()
 {
   glLinkProgram(m_program);
-  checkShaderError(m_program, GL_LINK_STATUS, true, "Error linking shader program");
+  checkShaderError(m_program, GL_LINK_STATUS, true,
+                   "Error linking shader program");
 
   glValidateProgram(m_program);
-  checkShaderError(m_program, GL_VALIDATE_STATUS, true, "Invalid shader program");
+  checkShaderError(m_program, GL_VALIDATE_STATUS, true,
+                   "Invalid shader program");
 }
 
-void Shader::updateUniforms(const Matrix4f& worldMatrix, const Matrix4f& projectedMatrix,
-                            Material& material)
+void Shader::updateUniforms(const Matrix4f& worldMatrix,
+                            const Matrix4f& projectedMatrix, Material& material)
 {
 }
 
@@ -143,7 +147,8 @@ void Shader::setUniform(const std::string& name, const Matrix4f& value)
   glUniformMatrix4fv(m_uniforms.at(name), 1, GL_TRUE, &(value[0][0]));
 }
 
-static void checkShaderError(int shader, int flag, bool isProgram, const std::string& errorMessage)
+static void checkShaderError(int shader, int flag, bool isProgram,
+                             const std::string& errorMessage)
 {
   GLint success = 0;
   GLchar error[1024] = {0};

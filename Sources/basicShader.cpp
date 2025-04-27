@@ -1,4 +1,4 @@
-#include "../Header/basicShader.h"
+#include "basicShader.h"
 
 BasicShader::BasicShader()
 {
@@ -16,7 +16,8 @@ BasicShader::~BasicShader()
 
 static unsigned char whitePixel[] = {0xFF, 0xFF, 0xFF, 0xFF};
 
-void BasicShader::updateUniforms(const Matrix4f& worldMatrix, const Matrix4f& projectedMatrix,
+void BasicShader::updateUniforms(const Matrix4f& worldMatrix,
+                                 const Matrix4f& projectedMatrix,
                                  Material& material)
 {
   static Texture WHITE = Texture(1, 1, whitePixel);

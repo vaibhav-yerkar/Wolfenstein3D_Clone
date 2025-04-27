@@ -1,5 +1,5 @@
-#include "../Header/game.h"
-#include "../Header/window.h"
+#include "game.h"
+#include "window.h"
 
 #include <math.h>
 double temp = 0.0f;
@@ -40,8 +40,8 @@ void Game::loadNextLevel()
   delete m_level;
   m_level = new Level(levelFile, collectionFile);
 
-  Transform::setProjection(70.0f, (float)Window::getWidth(), (float)Window::getHeight(), 0.1f,
-                           100.0f);
+  Transform::setProjection(70.0f, (float)Window::getWidth(),
+                           (float)Window::getHeight(), 0.1f, 100.0f);
   Transform::setCamera(m_level->getPlayer()->getCamera());
 
   isRunning = true;

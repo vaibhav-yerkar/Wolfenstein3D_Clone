@@ -1,4 +1,4 @@
-#include "../Header/transform.h"
+#include "transform.h"
 
 static Camera cameraInstance;
 
@@ -40,12 +40,14 @@ Matrix4f Transform::getProjectedTransformation()
   Matrix4f cameraRotation;
   Matrix4f cameraTranslation;
 
-  projectionMatrix.initPersProjTransform(m_fov, m_width, m_height, m_zNear, m_zFar);
+  projectionMatrix.initPersProjTransform(m_fov, m_width, m_height, m_zNear,
+                                         m_zFar);
   cameraRotation.initCameraTransform(m_camera->getForward(), m_camera->getUp());
-  cameraTranslation.initTranslationTransform(-m_camera->getPos().x, -m_camera->getPos().y,
-                                             -m_camera->getPos().z);
+  cameraTranslation.initTranslationTransform(
+      -m_camera->getPos().x, -m_camera->getPos().y, -m_camera->getPos().z);
 
-  return projectionMatrix * cameraRotation * cameraTranslation * transformationMatrix;
+  return projectionMatrix * cameraRotation * cameraTranslation *
+         transformationMatrix;
 }
 
 const Vector3f& Transform::getPos() const
@@ -93,7 +95,8 @@ void Transform::setScale(const Vector3f& scale)
   this->m_scale = scale;
 }
 
-void Transform::setProjection(float fov, float width, float height, float zNear, float zFar)
+void Transform::setProjection(float fov, float width, float height, float zNear,
+                              float zFar)
 {
   Transform::m_fov = fov;
   Transform::m_width = width;

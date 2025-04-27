@@ -1,4 +1,4 @@
-#include "../Header/quaternion.h"
+#include "quaternion.h"
 #include <math.h>
 
 Quaternion::Quaternion(float _x, float _y, float _z, float _w)

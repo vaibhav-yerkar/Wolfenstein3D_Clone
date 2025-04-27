@@ -1,4 +1,4 @@
-#include "../Header/bitmap.h"
+#include "bitmap.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -15,10 +15,12 @@ Bitmap::Bitmap(int width, int height)
 
 Bitmap::Bitmap(const std::string& fileName)
 {
-  SDL_Surface* image = IMG_Load((std::string(RESOURCE_PATH) + "/bitmaps/" + fileName).c_str());
+  SDL_Surface* image =
+      IMG_Load((std::string(RESOURCE_PATH) + "/bitmaps/" + fileName).c_str());
   if (!image)
   {
-    std::cerr << "Failed to load image : " << fileName << "\n" << IMG_GetError() << std::endl;
+    std::cerr << "Failed to load image : " << fileName << "\n"
+              << IMG_GetError() << std::endl;
   }
   m_width = image->w;
   m_height = image->h;

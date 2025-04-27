@@ -1,4 +1,4 @@
-#include "../Header/camera.h"
+#include "camera.h"
 
 Camera::Camera(Vector3f pos, Vector3f forward, Vector3f up)
 {
@@ -27,8 +27,8 @@ void Camera::input()
 
   if (mouseLocked)
   {
-    Vector2f centerPosition =
-        Vector2f((float)Window::getWidth() / 2.0f, (float)Window::getHeight() / 2.0f);
+    Vector2f centerPosition = Vector2f((float)Window::getWidth() / 2.0f,
+                                       (float)Window::getHeight() / 2.0f);
     Vector2f deltaPos = Input::getMousePosition() - centerPosition;
 
     bool rotY = deltaPos.x != 0;
@@ -45,8 +45,8 @@ void Camera::input()
 
   if (Input::getMouseDown(MOUSE::LEFT_MOUSE))
   {
-    Vector2f centerPosition =
-        Vector2f((float)Window::getWidth() / 2.0f, (float)Window::getHeight() / 2.0f);
+    Vector2f centerPosition = Vector2f((float)Window::getWidth() / 2.0f,
+                                       (float)Window::getHeight() / 2.0f);
     Input::setMousePosition(centerPosition);
     Input::setCursor(false);
     mouseLocked = true;

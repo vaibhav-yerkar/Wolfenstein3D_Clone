@@ -1,6 +1,6 @@
-#include "../Header/player.h"
-#include "../Header/game.h"
-#include "../Header/level.h"
+#include "game.h"
+#include "level.h"
+#include "player.h"
 #include "window.h"
 #include <iostream>
 #include <ostream>
@@ -12,7 +12,8 @@ static const float GUN_OFFSET = -0.0875f;
 
 static const float SCALE = 0.0625f;
 static const float SIZEY = SCALE;
-static const float SIZEX = (float)((double)SIZEY / (1.0379746835443037974683544303797 * 2.0));
+static const float SIZEX =
+    (float)((double)SIZEY / (1.0379746835443037974683544303797 * 2.0));
 static const float START = 0;
 
 static const float OFFSET_X = 0.0f; // 0.05f
@@ -41,7 +42,8 @@ bool Player::mouseLocked = false;
 
 Player::Player(const Vector3f& pos)
     : m_camera(pos), rd(std::random_device()), rand(rd()), m_health(MAX_HEALTH),
-      centerPosition((float)Window::getWidth() / 2, (float)Window::getHeight() / 2),
+      centerPosition((float)Window::getWidth() / 2,
+                     (float)Window::getHeight() / 2),
       movementVector(Vector3f(0, 0, 0))
 {
   // system("clear");
@@ -51,14 +53,16 @@ Player::Player(const Vector3f& pos)
   float gunFireTimer = 0.0f;
   if (!m_mesh)
   {
-    Vertex vertices[] = {Vertex(Vector3f(-SIZEX, START, START), Vector2f(TEX_MAX_X, TEX_MAX_Y)),
-                         Vertex(Vector3f(-SIZEX, SIZEY, START), Vector2f(TEX_MAX_X, TEX_MIN_Y)),
-                         Vertex(Vector3f(SIZEX, SIZEY, START), Vector2f(TEX_MIN_X, TEX_MIN_Y)),
-                         Vertex(Vector3f(SIZEX, START, START), Vector2f(TEX_MIN_X, TEX_MAX_Y))};
+    Vertex vertices[] = {
+        Vertex(Vector3f(-SIZEX, START, START), Vector2f(TEX_MAX_X, TEX_MAX_Y)),
+        Vertex(Vector3f(-SIZEX, SIZEY, START), Vector2f(TEX_MAX_X, TEX_MIN_Y)),
+        Vertex(Vector3f(SIZEX, SIZEY, START), Vector2f(TEX_MIN_X, TEX_MIN_Y)),
+        Vertex(Vector3f(SIZEX, START, START), Vector2f(TEX_MIN_X, TEX_MAX_Y))};
 
     int indices[] = {0, 1, 2, 0, 2, 3};
     m_mesh = new Mesh();
-    m_mesh->addVertices(vertices, ARRAY_SIZE(vertices), indices, ARRAY_SIZE(indices));
+    m_mesh->addVertices(vertices, ARRAY_SIZE(vertices), indices,
+                        ARRAY_SIZE(indices));
   }
   if (!gunMaterial)
   {
@@ -140,7 +144,8 @@ void Player::input()
       Window::playSound("Pistol.wav", Window::PLAYER_FIRE_CHANNEL, 0.65f);
 
       Vector2f lineStart(m_camera.getPos().getX(), m_camera.getPos().getZ());
-      Vector2f castDirection(m_camera.getForward().getX(), m_camera.getForward().getZ());
+      Vector2f castDirection(m_camera.getForward().getX(),
+                             m_camera.getForward().getZ());
       castDirection = castDirection.normalize();
       Vector2f lineEnd = lineStart + castDirection * SHOOT_DISTANCE;
 
@@ -197,8 +202,8 @@ void Player::update()
   Vector3f oldPos = m_camera.getPos();
   Vector3f newPos = oldPos + (movementVector * movAmt);
 
-  Vector3f collisionVector =
-      Game::getLevel()->checkCollision(oldPos, newPos, PLAYER_SIZE, PLAYER_SIZE);
+  Vector3f collisionVector = Game::getLevel()->checkCollision(
+      oldPos, newPos, PLAYER_SIZE, PLAYER_SIZE);
 
   if (collisionVector.getX() != 0 || collisionVector.getZ() != 0)
     movementVector = movementVector.mult(collisionVector);
@@ -212,12 +217,15 @@ void Player::update()
     Window::playSound("PlayerWalk.wav", Window::PLAYER_WALK_CHANNEL);
     m_camera.move(movementVector, movAmt);
   }
-  gunTransform.setPos(m_camera.getPos() + m_camera.getForward().normalize() * 0.105f);
+  gunTransform.setPos(m_camera.getPos() +
+                      m_camera.getForward().normalize() * 0.105f);
   gunTransform.getPos().setY(gunTransform.getPos().getY() + GUN_OFFSET);
 
-  Vector3f directionToCamera = Transform::getCamera().getPos() - gunTransform.getPos();
+  Vector3f directionToCamera =
+      Transform::getCamera().getPos() - gunTransform.getPos();
   float angleToFaceCamera =
-      std::atan2(directionToCamera.getZ(), directionToCamera.getX()) * (180.0f / M_PI);
+      std::atan2(directionToCamera.getZ(), directionToCamera.getX()) *
+      (180.0f / M_PI);
 
   if (directionToCamera.getX() < 0)
     angleToFaceCamera += 360;
@@ -230,7 +238,8 @@ void Player::render()
   Shader* shader = Game::getLevel()->getShader();
 
   shader->updateUniforms(gunTransform.getTransformation(),
-                         gunTransform.getProjectedTransformation(), *gunMaterial);
+                         gunTransform.getProjectedTransformation(),
+                         *gunMaterial);
 
   m_mesh->draw();
 }

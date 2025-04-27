@@ -1,4 +1,4 @@
-#include "../Header/input.h"
+#include "input.h"
 #include <SDL.h>
 #include <SDL_events.h>
 #include <SDL_mouse.h>

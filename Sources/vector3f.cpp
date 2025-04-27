@@ -1,6 +1,6 @@
-#include "../Header/vector3f.h"
-#include "../Header/quaternion.h"
-#include "../Header/util.h"
+#include "quaternion.h"
+#include "util.h"
+#include "vector3f.h"
 #include <cmath>
 #include <math.h>
 

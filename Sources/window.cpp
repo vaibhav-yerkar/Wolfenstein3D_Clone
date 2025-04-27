@@ -1,6 +1,6 @@
-#include "../Header/window.h"
-#include "../Header/sdl_requests.h"
+#include "sdl_requests.h"
 #include "util.h"
+#include "window.h"
 
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
@@ -32,8 +32,8 @@ void Window::create(int width, int height, const std::string& title)
   SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-  SDLCreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height,
-                  false);
+  SDLCreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                  width, height, false);
 
   GLenum res = glewInit();
   if (res != GLEW_OK)
@@ -48,7 +48,8 @@ void Window::create(int width, int height, const std::string& title)
 
   if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
   {
-    std::cerr << "Failed to initialize SDL_mixer: " << Mix_GetError() << std::endl;
+    std::cerr << "Failed to initialize SDL_mixer: " << Mix_GetError()
+              << std::endl;
     SDL_Quit();
   }
   Mix_AllocateChannels(16);

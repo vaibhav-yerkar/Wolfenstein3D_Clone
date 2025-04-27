@@ -1,5 +1,5 @@
-#include "../Header/door.h"
-#include "../Header/game.h"
+#include "door.h"
+#include "game.h"
 
 static const float LENGTH = 1;
 static const float HEIGHT = 1;
@@ -42,7 +42,8 @@ Door::Door(Transform transform, Material* material, Vector3f openPosition)
                      10, 9, 8, 11, 10, 8, 12, 13, 14, 12, 14, 15};
 
     m_mesh = new Mesh();
-    m_mesh->addVertices(vertices, ARRAY_SIZE(vertices), indices, ARRAY_SIZE(indices));
+    m_mesh->addVertices(vertices, ARRAY_SIZE(vertices), indices,
+                        ARRAY_SIZE(indices));
   }
 }
 
@@ -68,8 +69,9 @@ void Door::update()
     if (time < openTime)
     {
       Window::playSound("Door.wav", Window::DOOR_OPEN_CHANNEL, 0.45f);
-      getTransform().setPos(VectorLerp(m_closePosition, m_openPosition,
-                                       (float)((time - openingStartTime) / TIME_TO_OPEN)));
+      getTransform().setPos(
+          VectorLerp(m_closePosition, m_openPosition,
+                     (float)((time - openingStartTime) / TIME_TO_OPEN)));
     }
     else if (time < closingStartTime)
     {
@@ -77,8 +79,9 @@ void Door::update()
     }
     else if (time < closeTime)
     {
-      getTransform().setPos(VectorLerp(m_openPosition, m_closePosition,
-                                       (float)((time - closingStartTime) / TIME_TO_OPEN)));
+      getTransform().setPos(
+          VectorLerp(m_openPosition, m_closePosition,
+                     (float)((time - closingStartTime) / TIME_TO_OPEN)));
       Window::playSound("Door.wav", Window::DOOR_CLOSE_CHANNEL, 0.45f);
     }
     else
@@ -93,7 +96,8 @@ void Door::render()
 {
   Shader* m_shader = Game::getLevel()->getShader();
   m_shader->updateUniforms(m_transform.getTransformation(),
-                           m_transform.getProjectedTransformation(), *m_material);
+                           m_transform.getProjectedTransformation(),
+                           *m_material);
 
   m_mesh->draw();
 }
@@ -111,7 +115,8 @@ Transform& Door::getTransform()
   return m_transform;
 }
 
-Vector3f Door::VectorLerp(const Vector3f& startPos, const Vector3f& endPos, float lerpFactor)
+Vector3f Door::VectorLerp(const Vector3f& startPos, const Vector3f& endPos,
+                          float lerpFactor)
 {
   return startPos + ((endPos - startPos) * lerpFactor);
 }

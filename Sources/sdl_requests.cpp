@@ -1,4 +1,4 @@
-#include "../Header/sdl_requests.h"
+#include "sdl_requests.h"
 #include <SDL2/SDL.h>
 
 static SDL_Window* window;
@@ -15,15 +15,17 @@ void SDLSetIsCloseRequested(bool value)
   isCloseRequested = value;
 }
 
-void SDLCreateWindow(const char* title, int x, int y, int width, int height, bool fullscreen)
+void SDLCreateWindow(const char* title, int x, int y, int width, int height,
+                     bool fullscreen)
 {
   int mode = 0;
 
   if (fullscreen)
     mode = SDL_WINDOW_FULLSCREEN;
 
-  window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height,
-                            SDL_WINDOW_OPENGL | mode);
+  window =
+      SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                       width, height, SDL_WINDOW_OPENGL | mode);
   glContext = SDL_GL_CreateContext(window);
 }
 

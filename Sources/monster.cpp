@@ -1,12 +1,13 @@
-#include "../Header/monster.h"
-#include "../Header/game.h"
+#include "game.h"
+#include "monster.h"
 #include "transform.h"
 #include "window.h"
 #include <vector>
 
 static const float SCALE = 0.7f;
 static const float SIZEY = SCALE;
-static const float SIZEX = (float)((double)SIZEY / (1.9310344827586206896551724137931 * 2.0));
+static const float SIZEX =
+    (float)((double)SIZEY / (1.9310344827586206896551724137931 * 2.0));
 static const float START = 0.0;
 
 static const float OFFSET_X = 0.00f;
@@ -40,8 +41,9 @@ Mesh* Monster::m_mesh = nullptr;
 std::vector<Texture*> Monster::m_animations;
 
 Monster::Monster(const Transform& transform)
-    : m_transform(transform), state(STATE_IDLE), health(MAX_HEALTH), canLook(false),
-      canAttack(false), deathTime(0), m_rand(std::random_device{}())
+    : m_transform(transform), state(STATE_IDLE), health(MAX_HEALTH),
+      canLook(false), canAttack(false), deathTime(0),
+      m_rand(std::random_device{}())
 {
   if (m_animations.empty())
   {
@@ -66,15 +68,17 @@ Monster::Monster(const Transform& transform)
 
   if (!m_mesh)
   {
-    Vertex vertices[] = {Vertex(Vector3f(-SIZEX, START, START), Vector2f(TEX_MAX_X, TEX_MAX_Y)),
-                         Vertex(Vector3f(-SIZEX, SIZEY, START), Vector2f(TEX_MAX_X, TEX_MIN_Y)),
-                         Vertex(Vector3f(SIZEX, SIZEY, START), Vector2f(TEX_MIN_X, TEX_MIN_Y)),
-                         Vertex(Vector3f(SIZEX, START, START), Vector2f(TEX_MIN_X, TEX_MAX_Y))};
+    Vertex vertices[] = {
+        Vertex(Vector3f(-SIZEX, START, START), Vector2f(TEX_MAX_X, TEX_MAX_Y)),
+        Vertex(Vector3f(-SIZEX, SIZEY, START), Vector2f(TEX_MAX_X, TEX_MIN_Y)),
+        Vertex(Vector3f(SIZEX, SIZEY, START), Vector2f(TEX_MIN_X, TEX_MIN_Y)),
+        Vertex(Vector3f(SIZEX, START, START), Vector2f(TEX_MIN_X, TEX_MAX_Y))};
 
     int indices[] = {0, 1, 2, 0, 2, 3};
 
     m_mesh = new Mesh();
-    m_mesh->addVertices(vertices, ARRAY_SIZE(vertices), indices, ARRAY_SIZE(indices));
+    m_mesh->addVertices(vertices, ARRAY_SIZE(vertices), indices,
+                        ARRAY_SIZE(indices));
   }
 
   this->m_transform = transform;
@@ -120,16 +124,19 @@ void Monster::idleUpdate(const Vector3f& orientation, float direction)
     m_material.setTexture(m_animations[1]);
     if (direction < SHOOT_DISTANCE)
     {
-      Vector2f lineStart(m_transform.getPos().getX(), m_transform.getPos().getZ());
+      Vector2f lineStart(m_transform.getPos().getX(),
+                         m_transform.getPos().getZ());
       Vector2f castDirection(orientation.getX(), orientation.getZ());
       Vector2f lineEnd = lineStart + castDirection * SHOOT_DISTANCE;
 
-      Vector2f collisionVector = Game::getLevel()->checkIntersection(lineStart, lineEnd, false);
+      Vector2f collisionVector =
+          Game::getLevel()->checkIntersection(lineStart, lineEnd, false);
       Vector2f playerIntersectVector(Transform::getCamera().getPos().getX(),
                                      Transform::getCamera().getPos().getZ());
 
       if (collisionVector.length() == 0 ||
-          (playerIntersectVector - lineStart).length() < (collisionVector - lineStart).length())
+          (playerIntersectVector - lineStart).length() <
+              (collisionVector - lineStart).length())
       {
         state = STATE_CHASE;
       }
@@ -160,7 +167,8 @@ void Monster::chaseUpdate(const Vector3f& orientation, float distance)
     m_material.setTexture(m_animations[3]);
   }
 
-  if (std::generate_canonical<double, 10000000000>(m_rand) < ATTACK_CHANCE * Time::getDelta())
+  if (std::generate_canonical<double, 10000000000>(m_rand) <
+      ATTACK_CHANCE * Time::getDelta())
     state = STATE_ATTACK;
 
   if (distance > MOVEMENT_STOP_DISTANCE)
@@ -170,8 +178,8 @@ void Monster::chaseUpdate(const Vector3f& orientation, float distance)
     Vector3f oldPos = m_transform.getPos();
     Vector3f newPos = m_transform.getPos() + orientation * moveAmount;
 
-    Vector3f collisionVector =
-        Game::getLevel()->checkCollision(oldPos, newPos, MONSTER_WIDTH, MONSTER_LENGTH);
+    Vector3f collisionVector = Game::getLevel()->checkCollision(
+        oldPos, newPos, MONSTER_WIDTH, MONSTER_LENGTH);
     Vector3f movementVector = collisionVector.mult(orientation);
 
     if (movementVector.length() > 0)
@@ -210,23 +218,28 @@ void Monster::attackUpdate(const Vector3f& orientation, float distance)
     if (canAttack)
     {
       Window::playSound("Machine_Gun.wav", Window::MONSTER_FIRE_CHANNEL, 0.4f);
-      Vector2f lineStart(m_transform.getPos().getX(), m_transform.getPos().getZ());
+      Vector2f lineStart(m_transform.getPos().getX(),
+                         m_transform.getPos().getZ());
       Vector2f castDirection(orientation.getX(), orientation.getZ());
-      castDirection =
-          castDirection.rotate((std::generate_canonical<float, 10>(m_rand) - 0.5f) * SHOT_ANGLE);
+      castDirection = castDirection.rotate(
+          (std::generate_canonical<float, 10>(m_rand) - 0.5f) * SHOT_ANGLE);
       Vector2f lineEnd = lineStart + castDirection * SHOOT_DISTANCE;
 
-      Vector2f collisionVector = Game::getLevel()->checkIntersection(lineStart, lineEnd, false);
+      Vector2f collisionVector =
+          Game::getLevel()->checkIntersection(lineStart, lineEnd, false);
       Vector2f playerIntersectVector = Game::getLevel()->lineIntersectRect(
           lineStart, lineEnd,
-          Vector2f(Transform::getCamera().getPos().getX(), Transform::getCamera().getPos().getZ()),
+          Vector2f(Transform::getCamera().getPos().getX(),
+                   Transform::getCamera().getPos().getZ()),
           Vector2f(Player::PLAYER_SIZE, Player::PLAYER_SIZE));
 
       if ((playerIntersectVector - lineStart).length() == 0 ||
           (collisionVector.length() == 0 ||
-           (playerIntersectVector - lineStart).length() < (collisionVector - lineStart).length()))
+           (playerIntersectVector - lineStart).length() <
+               (collisionVector - lineStart).length()))
       {
-        Game::getLevel()->damagePlayer(m_rand() % (DAMAGE_MAX - DAMAGE_MIN + 1) + DAMAGE_MIN);
+        Game::getLevel()->damagePlayer(
+            m_rand() % (DAMAGE_MAX - DAMAGE_MIN + 1) + DAMAGE_MIN);
       }
 
       canAttack = false;
@@ -295,7 +308,8 @@ void Monster::alignWithGround()
 void Monster::faceCamera(const Vector3f& directionToCamera)
 {
   float angleToFaceTheCamera =
-      std::atan2(directionToCamera.getZ(), directionToCamera.getX()) * 180.0f / M_PI;
+      std::atan2(directionToCamera.getZ(), directionToCamera.getX()) * 180.0f /
+      M_PI;
 
   if (directionToCamera.getX() < 0)
   {
@@ -307,7 +321,8 @@ void Monster::faceCamera(const Vector3f& directionToCamera)
 
 void Monster::update()
 {
-  Vector3f directionToCamera = Transform::getCamera().getPos() - m_transform.getPos();
+  Vector3f directionToCamera =
+      Transform::getCamera().getPos() - m_transform.getPos();
 
   float distance = directionToCamera.length();
   Vector3f orientation = directionToCamera / distance;
@@ -338,7 +353,7 @@ void Monster::update()
 void Monster::render()
 {
   Shader* shader = Game::getLevel()->getShader();
-  shader->updateUniforms(m_transform.getTransformation(), m_transform.getProjectedTransformation(),
-                         m_material);
+  shader->updateUniforms(m_transform.getTransformation(),
+                         m_transform.getProjectedTransformation(), m_material);
   m_mesh->draw();
 }

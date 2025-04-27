@@ -1,6 +1,6 @@
-#include "../Header/level.h"
-#include "../Header/basicShader.h"
-#include "../Header/game.h"
+#include "basicShader.h"
+#include "game.h"
+#include "level.h"
 #include "window.h"
 #include <cstdlib>
 #include <iostream>
@@ -69,7 +69,8 @@ void Level::update()
                                  {
                                    return std::find(m_medkitsToRemove.begin(),
                                                     m_medkitsToRemove.end(),
-                                                    &medkit) != m_medkitsToRemove.end();
+                                                    &medkit) !=
+                                          m_medkitsToRemove.end();
                                  }),
                   m_medkits.end());
   m_player.update();
@@ -79,7 +80,8 @@ void Level::render()
 {
   m_shader->bind();
   m_shader->updateUniforms(m_transform.getTransformation(),
-                           m_transform.getProjectedTransformation(), m_material);
+                           m_transform.getProjectedTransformation(),
+                           m_material);
   m_mesh.draw();
 
   for (Door* door : m_doors)
@@ -112,17 +114,21 @@ void Level::addSpecial(int blueValue, int x, int y)
   if (blueValue == 16)
     addDoor(x, y);
   if (blueValue == 1)
-    m_player = Player(Vector3f((x + 0.5f) * SPOT_WIDTH, 0.4375f, (y + 0.5f) * SPOT_LENGTH));
+    m_player = Player(
+        Vector3f((x + 0.5f) * SPOT_WIDTH, 0.4375f, (y + 0.5f) * SPOT_LENGTH));
   if (blueValue == 128)
   {
     Transform monsterTransform = Transform();
-    monsterTransform.setPos(Vector3f((x + 0.5f) * SPOT_WIDTH, 0, (y + 0.5f) * SPOT_LENGTH));
+    monsterTransform.setPos(
+        Vector3f((x + 0.5f) * SPOT_WIDTH, 0, (y + 0.5f) * SPOT_LENGTH));
     m_monsters.push_back(new Monster(monsterTransform));
   }
   if (blueValue == 192)
-    m_medkits.push_back(Medkit(Vector3f((x + 0.5f) * SPOT_WIDTH, 0, (y + 0.5f) * SPOT_LENGTH)));
+    m_medkits.push_back(
+        Medkit(Vector3f((x + 0.5f) * SPOT_WIDTH, 0, (y + 0.5f) * SPOT_LENGTH)));
   if (blueValue == 97)
-    exitPoints.push_back(Vector3f((x + 0.5f) * SPOT_WIDTH, 0, (y + 0.5f) * SPOT_LENGTH));
+    exitPoints.push_back(
+        Vector3f((x + 0.5f) * SPOT_WIDTH, 0, (y + 0.5f) * SPOT_LENGTH));
 }
 
 void Level::generateLevel()
@@ -139,7 +145,8 @@ void Level::generateLevel()
 
       addSpecial(((m_level.getPixel(i, j) & 0xFF0000) >> 16), i, j);
 
-      std::vector<float> texCoord = calcTexCoords((m_level.getPixel(i, j) & 0x00FF00) >> 8);
+      std::vector<float> texCoord =
+          calcTexCoords((m_level.getPixel(i, j) & 0x00FF00) >> 8);
 
       // Generate Floor
       addFace(indices, vertices.size(), true);
@@ -155,28 +162,34 @@ void Level::generateLevel()
       if ((m_level.getPixel(i, j - 1) & 0xFFFFFF) == 0)
       {
         collisionPosStart.push_back(Vector2f(i * SPOT_WIDTH, j * SPOT_LENGTH));
-        collisionPosEnd.push_back(Vector2f((i + 1) * SPOT_WIDTH, j * SPOT_LENGTH));
+        collisionPosEnd.push_back(
+            Vector2f((i + 1) * SPOT_WIDTH, j * SPOT_LENGTH));
         addFace(indices, vertices.size(), false);
         addVertices(vertices, i, 0, j, true, true, false, texCoord);
       }
       if ((m_level.getPixel(i, j + 1) & 0xFFFFFF) == 0)
       {
-        collisionPosStart.push_back(Vector2f(i * SPOT_WIDTH, (j + 1) * SPOT_LENGTH));
-        collisionPosEnd.push_back(Vector2f((i + 1) * SPOT_WIDTH, (j + 1) * SPOT_LENGTH));
+        collisionPosStart.push_back(
+            Vector2f(i * SPOT_WIDTH, (j + 1) * SPOT_LENGTH));
+        collisionPosEnd.push_back(
+            Vector2f((i + 1) * SPOT_WIDTH, (j + 1) * SPOT_LENGTH));
         addFace(indices, vertices.size(), true);
         addVertices(vertices, i, 0, (j + 1), true, true, false, texCoord);
       }
       if ((m_level.getPixel(i - 1, j) & 0xFFFFFF) == 0)
       {
         collisionPosStart.push_back(Vector2f(i * SPOT_WIDTH, j * SPOT_LENGTH));
-        collisionPosEnd.push_back(Vector2f(i * SPOT_WIDTH, (j + 1) * SPOT_LENGTH));
+        collisionPosEnd.push_back(
+            Vector2f(i * SPOT_WIDTH, (j + 1) * SPOT_LENGTH));
         addFace(indices, vertices.size(), true);
         addVertices(vertices, 0, j, i, false, true, true, texCoord);
       }
       if ((m_level.getPixel(i + 1, j) & 0xFFFFFF) == 0)
       {
-        collisionPosStart.push_back(Vector2f((i + 1) * SPOT_WIDTH, j * SPOT_LENGTH));
-        collisionPosEnd.push_back(Vector2f((i + 1) * SPOT_WIDTH, (j + 1) * SPOT_LENGTH));
+        collisionPosStart.push_back(
+            Vector2f((i + 1) * SPOT_WIDTH, j * SPOT_LENGTH));
+        collisionPosEnd.push_back(
+            Vector2f((i + 1) * SPOT_WIDTH, (j + 1) * SPOT_LENGTH));
         addFace(indices, vertices.size(), false);
         addVertices(vertices, 0, j, (i + 1), false, true, true, texCoord);
       }
@@ -188,19 +201,21 @@ void Level::generateLevel()
   m_mesh.addVertices(vertArray, vertices.size(), intArray, indices.size());
 }
 
-Vector2f Level::rectCollide(Vector2f oldPos, Vector2f newPos, Vector2f size1, Vector2f pos2,
-                            Vector2f size2)
+Vector2f Level::rectCollide(Vector2f oldPos, Vector2f newPos, Vector2f size1,
+                            Vector2f pos2, Vector2f size2)
 {
   Vector2f res = Vector2f(0, 0);
 
   if (newPos.getX() + size1.getX() < pos2.getX() ||
-      newPos.getX() - size1.getX() > pos2.getX() + size2.getX() * size2.getX() ||
+      newPos.getX() - size1.getX() >
+          pos2.getX() + size2.getX() * size2.getX() ||
       oldPos.getY() + size1.getY() < pos2.getY() ||
       oldPos.getY() - size1.getY() > pos2.getY() + size2.getY() * size2.getY())
     res.setX(1);
 
   if (oldPos.getX() + size1.getX() < pos2.getX() ||
-      oldPos.getX() - size1.getX() > pos2.getX() + size2.getX() * size2.getX() ||
+      oldPos.getX() - size1.getX() >
+          pos2.getX() + size2.getX() * size2.getX() ||
       newPos.getY() + size1.getY() < pos2.getY() ||
       newPos.getY() - size1.getY() > pos2.getY() + size2.getY() * size2.getY())
     res.setY(1);
@@ -208,7 +223,8 @@ Vector2f Level::rectCollide(Vector2f oldPos, Vector2f newPos, Vector2f size1, Ve
   return res;
 }
 
-Vector3f Level::checkCollision(Vector3f& oldPos, Vector3f& newPos, float objWidth, float objLength)
+Vector3f Level::checkCollision(Vector3f& oldPos, Vector3f& newPos,
+                               float objWidth, float objLength)
 {
   Vector2f collisionVector(1, 1);
   Vector3f movementVector = newPos - oldPos;
@@ -228,7 +244,8 @@ Vector3f Level::checkCollision(Vector3f& oldPos, Vector3f& newPos, float objWidt
         if ((m_level.getPixel(i, j) & 0xFFFFFF) == 0)
         {
           collisionVector = collisionVector.mult(
-              rectCollide(oldPos2, newPos2, objectSize, blockSize.mult(Vector2f(i, j)), blockSize));
+              rectCollide(oldPos2, newPos2, objectSize,
+                          blockSize.mult(Vector2f(i, j)), blockSize));
         }
       }
     }
@@ -237,32 +254,35 @@ Vector3f Level::checkCollision(Vector3f& oldPos, Vector3f& newPos, float objWidt
       Vector2f doorSize = door->getDoorSize();
       Vector3f doorPos3f = door->getTransform().getPos();
       Vector2f doorPos2f = Vector2f(doorPos3f.getX(), doorPos3f.getZ());
-      collisionVector =
-          collisionVector.mult(rectCollide(oldPos2, newPos2, objectSize, doorPos2f, doorSize));
+      collisionVector = collisionVector.mult(
+          rectCollide(oldPos2, newPos2, objectSize, doorPos2f, doorSize));
     }
   }
 
   return Vector3f(collisionVector.getX(), 0, collisionVector.getY());
 }
 
-Vector2f Level::checkIntersection(const Vector2f& lineStart, const Vector2f& lineEnd,
-                                  bool hurtMonster)
+Vector2f Level::checkIntersection(const Vector2f& lineStart,
+                                  const Vector2f& lineEnd, bool hurtMonster)
 {
   Vector2f nearestIntersection = NULL;
   for (int i = 0; i < collisionPosStart.size(); i++)
   {
-    Vector2f collisionVector =
-        lineIntersect(lineStart, lineEnd, collisionPosStart[i], collisionPosEnd[i]);
-    nearestIntersection = findNearestVector2f(nearestIntersection, collisionVector, lineStart);
+    Vector2f collisionVector = lineIntersect(
+        lineStart, lineEnd, collisionPosStart[i], collisionPosEnd[i]);
+    nearestIntersection =
+        findNearestVector2f(nearestIntersection, collisionVector, lineStart);
   }
   for (Door* door : m_doors)
   {
     Vector2f doorSize = door->getDoorSize();
     Vector3f doorPos3f = door->getTransform().getPos();
     Vector2f doorPos2f = Vector2f(doorPos3f.getX(), doorPos3f.getZ());
-    Vector2f collisionVector = lineIntersectRect(lineStart, lineEnd, doorPos2f, doorSize);
+    Vector2f collisionVector =
+        lineIntersectRect(lineStart, lineEnd, doorPos2f, doorSize);
 
-    nearestIntersection = findNearestVector2f(nearestIntersection, collisionVector, lineStart);
+    nearestIntersection =
+        findNearestVector2f(nearestIntersection, collisionVector, lineStart);
   }
   if (hurtMonster)
   {
@@ -273,19 +293,22 @@ Vector2f Level::checkIntersection(const Vector2f& lineStart, const Vector2f& lin
     {
       Vector2f monsterSize = monster->getSize();
       Vector3f monsterPos3f = monster->getTransform().getPos();
-      Vector2f monsterPos2f = Vector2f(monsterPos3f.getX(), monsterPos3f.getZ());
-      Vector2f collisionVector = lineIntersectRect(lineStart, lineEnd, monsterPos2f, monsterSize);
+      Vector2f monsterPos2f =
+          Vector2f(monsterPos3f.getX(), monsterPos3f.getZ());
+      Vector2f collisionVector =
+          lineIntersectRect(lineStart, lineEnd, monsterPos2f, monsterSize);
 
-      nearestMonsterIntersect =
-          findNearestVector2f(nearestMonsterIntersect, collisionVector, lineStart);
+      nearestMonsterIntersect = findNearestVector2f(nearestMonsterIntersect,
+                                                    collisionVector, lineStart);
 
       if (nearestMonsterIntersect == collisionVector)
         nearestMonster = monster;
     }
 
     if (nearestMonsterIntersect != NULL &&
-        (nearestIntersection == NULL || (nearestMonsterIntersect - lineStart).length() <
-                                            (nearestIntersection - lineStart).length()))
+        (nearestIntersection == NULL ||
+         (nearestMonsterIntersect - lineStart).length() <
+             (nearestIntersection - lineStart).length()))
     {
       if (nearestMonster != nullptr)
         nearestMonster->damage(m_player.getDamage());
@@ -294,7 +317,8 @@ Vector2f Level::checkIntersection(const Vector2f& lineStart, const Vector2f& lin
   return nearestIntersection;
 }
 
-void Level::addFace(std::vector<int>& indices, int startLocation, bool direction)
+void Level::addFace(std::vector<int>& indices, int startLocation,
+                    bool direction)
 {
   if (direction)
   {
@@ -332,44 +356,57 @@ std::vector<float> Level::calcTexCoords(int value)
   return result;
 }
 
-void Level::addVertices(std::vector<Vertex>& vertices, int i, int j, float offset, bool x, bool y,
-                        bool z, std::vector<float> texCoord)
+void Level::addVertices(std::vector<Vertex>& vertices, int i, int j,
+                        float offset, bool x, bool y, bool z,
+                        std::vector<float> texCoord)
 {
   if (x && z)
   {
-    vertices.push_back(Vertex(Vector3f(i * SPOT_WIDTH, offset * SPOT_HEIGHT, j * SPOT_LENGTH),
-                              Vector2f(texCoord[1], texCoord[3])));
-    vertices.push_back(Vertex(Vector3f((i + 1) * SPOT_WIDTH, offset * SPOT_HEIGHT, j * SPOT_LENGTH),
-                              Vector2f(texCoord[0], texCoord[3])));
     vertices.push_back(
-        Vertex(Vector3f((i + 1) * SPOT_WIDTH, offset * SPOT_HEIGHT, (j + 1) * SPOT_LENGTH),
+        Vertex(Vector3f(i * SPOT_WIDTH, offset * SPOT_HEIGHT, j * SPOT_LENGTH),
+               Vector2f(texCoord[1], texCoord[3])));
+    vertices.push_back(Vertex(
+        Vector3f((i + 1) * SPOT_WIDTH, offset * SPOT_HEIGHT, j * SPOT_LENGTH),
+        Vector2f(texCoord[0], texCoord[3])));
+    vertices.push_back(
+        Vertex(Vector3f((i + 1) * SPOT_WIDTH, offset * SPOT_HEIGHT,
+                        (j + 1) * SPOT_LENGTH),
                Vector2f(texCoord[0], texCoord[2])));
-    vertices.push_back(Vertex(Vector3f(i * SPOT_WIDTH, offset * SPOT_HEIGHT, (j + 1) * SPOT_LENGTH),
-                              Vector2f(texCoord[1], texCoord[2])));
+    vertices.push_back(Vertex(
+        Vector3f(i * SPOT_WIDTH, offset * SPOT_HEIGHT, (j + 1) * SPOT_LENGTH),
+        Vector2f(texCoord[1], texCoord[2])));
   }
   else if (x && y)
   {
-    vertices.push_back(Vertex(Vector3f(i * SPOT_WIDTH, j * SPOT_HEIGHT, offset * SPOT_LENGTH),
-                              Vector2f(texCoord[1], texCoord[3])));
-    vertices.push_back(Vertex(Vector3f((i + 1) * SPOT_WIDTH, j * SPOT_HEIGHT, offset * SPOT_LENGTH),
-                              Vector2f(texCoord[0], texCoord[3])));
     vertices.push_back(
-        Vertex(Vector3f((i + 1) * SPOT_WIDTH, (j + 1) * SPOT_HEIGHT, offset * SPOT_LENGTH),
+        Vertex(Vector3f(i * SPOT_WIDTH, j * SPOT_HEIGHT, offset * SPOT_LENGTH),
+               Vector2f(texCoord[1], texCoord[3])));
+    vertices.push_back(Vertex(
+        Vector3f((i + 1) * SPOT_WIDTH, j * SPOT_HEIGHT, offset * SPOT_LENGTH),
+        Vector2f(texCoord[0], texCoord[3])));
+    vertices.push_back(
+        Vertex(Vector3f((i + 1) * SPOT_WIDTH, (j + 1) * SPOT_HEIGHT,
+                        offset * SPOT_LENGTH),
                Vector2f(texCoord[0], texCoord[2])));
-    vertices.push_back(Vertex(Vector3f(i * SPOT_WIDTH, (j + 1) * SPOT_HEIGHT, offset * SPOT_LENGTH),
-                              Vector2f(texCoord[1], texCoord[2])));
+    vertices.push_back(Vertex(
+        Vector3f(i * SPOT_WIDTH, (j + 1) * SPOT_HEIGHT, offset * SPOT_LENGTH),
+        Vector2f(texCoord[1], texCoord[2])));
   }
   else if (y && z)
   {
-    vertices.push_back(Vertex(Vector3f(offset * SPOT_WIDTH, i * SPOT_HEIGHT, j * SPOT_LENGTH),
-                              Vector2f(texCoord[1], texCoord[3])));
-    vertices.push_back(Vertex(Vector3f(offset * SPOT_WIDTH, i * SPOT_HEIGHT, (j + 1) * SPOT_LENGTH),
-                              Vector2f(texCoord[0], texCoord[3])));
     vertices.push_back(
-        Vertex(Vector3f(offset * SPOT_WIDTH, (i + 1) * SPOT_HEIGHT, (j + 1) * SPOT_LENGTH),
+        Vertex(Vector3f(offset * SPOT_WIDTH, i * SPOT_HEIGHT, j * SPOT_LENGTH),
+               Vector2f(texCoord[1], texCoord[3])));
+    vertices.push_back(Vertex(
+        Vector3f(offset * SPOT_WIDTH, i * SPOT_HEIGHT, (j + 1) * SPOT_LENGTH),
+        Vector2f(texCoord[0], texCoord[3])));
+    vertices.push_back(
+        Vertex(Vector3f(offset * SPOT_WIDTH, (i + 1) * SPOT_HEIGHT,
+                        (j + 1) * SPOT_LENGTH),
                Vector2f(texCoord[0], texCoord[2])));
-    vertices.push_back(Vertex(Vector3f(offset * SPOT_WIDTH, (i + 1) * SPOT_HEIGHT, j * SPOT_LENGTH),
-                              Vector2f(texCoord[1], texCoord[2])));
+    vertices.push_back(Vertex(
+        Vector3f(offset * SPOT_WIDTH, (i + 1) * SPOT_HEIGHT, j * SPOT_LENGTH),
+        Vector2f(texCoord[1], texCoord[2])));
   }
   else
   {
@@ -382,14 +419,14 @@ void Level::addDoor(int x, int y)
 {
   Transform doorTransform = Transform();
 
-  bool xDoor =
-      (m_level.getPixel(x, y - 1) & 0xFFFFFF) == 0 && (m_level.getPixel(x, y + 1) & 0xFFFFFF) == 0;
-  bool yDoor =
-      (m_level.getPixel(x - 1, y) & 0xFFFFFF) == 0 && (m_level.getPixel(x + 1, y) & 0xFFFFFF) == 0;
+  bool xDoor = (m_level.getPixel(x, y - 1) & 0xFFFFFF) == 0 &&
+               (m_level.getPixel(x, y + 1) & 0xFFFFFF) == 0;
+  bool yDoor = (m_level.getPixel(x - 1, y) & 0xFFFFFF) == 0 &&
+               (m_level.getPixel(x + 1, y) & 0xFFFFFF) == 0;
   if (!(xDoor ^ yDoor))
   {
-    std::cerr << "Level Generation failed : Placed doors at invalid position : " << x << ", " << y
-              << std::endl;
+    std::cerr << "Level Generation failed : Placed doors at invalid position : "
+              << x << ", " << y << std::endl;
     exit(1);
   }
   Vector3f openPosition = NULL;
@@ -397,13 +434,15 @@ void Level::addDoor(int x, int y)
   if (yDoor)
   {
     doorTransform.setPos(Vector3f(x, 0, y + SPOT_LENGTH / 2));
-    openPosition = doorTransform.getPos() - Vector3f(DOOR_OPEN_MOVEMENT_AMOUNT, 0.0f, 0.0f);
+    openPosition = doorTransform.getPos() -
+                   Vector3f(DOOR_OPEN_MOVEMENT_AMOUNT, 0.0f, 0.0f);
   }
   if (xDoor)
   {
     doorTransform.setPos(Vector3f(x + SPOT_WIDTH / 2, 0, y));
     doorTransform.setRot(Vector3f(0, 90, 0));
-    openPosition = doorTransform.getPos() - Vector3f(0.0f, 0.0f, DOOR_OPEN_MOVEMENT_AMOUNT);
+    openPosition = doorTransform.getPos() -
+                   Vector3f(0.0f, 0.0f, DOOR_OPEN_MOVEMENT_AMOUNT);
   }
   m_doors.push_back(new Door(doorTransform, &m_material, openPosition));
 }
@@ -411,41 +450,49 @@ void Level::addDoor(int x, int y)
 Vector2f Level::findNearestVector2f(const Vector2f& a, const Vector2f& b,
                                     const Vector2f& positionRelativeTo)
 {
-  if (b != NULL &&
-      (a == NULL || ((a - positionRelativeTo).length() > (b - positionRelativeTo).length())))
+  if (b != NULL && (a == NULL || ((a - positionRelativeTo).length() >
+                                  (b - positionRelativeTo).length())))
     return b;
 
   return a;
 }
 
-Vector2f Level::lineIntersectRect(const Vector2f& lineStart, const Vector2f& lineEnd,
-                                  const Vector2f& rectPos, const Vector2f& rectSize)
+Vector2f Level::lineIntersectRect(const Vector2f& lineStart,
+                                  const Vector2f& lineEnd,
+                                  const Vector2f& rectPos,
+                                  const Vector2f& rectSize)
 {
   Vector2f result = NULL;
 
-  Vector2f collisionVector = lineIntersect(
-      lineStart, lineEnd, rectPos, Vector2f(rectPos.getX() + rectSize.getX(), rectPos.getY()));
-  result = findNearestVector2f(result, collisionVector, lineStart);
-
-  collisionVector = lineIntersect(lineStart, lineEnd, rectPos,
-                                  Vector2f(rectPos.getX(), rectPos.getY() + rectSize.getY()));
+  Vector2f collisionVector =
+      lineIntersect(lineStart, lineEnd, rectPos,
+                    Vector2f(rectPos.getX() + rectSize.getX(), rectPos.getY()));
   result = findNearestVector2f(result, collisionVector, lineStart);
 
   collisionVector =
-      lineIntersect(lineStart, lineEnd, Vector2f(rectPos.getX(), rectPos.getY() + rectSize.getY()),
+      lineIntersect(lineStart, lineEnd, rectPos,
+                    Vector2f(rectPos.getX(), rectPos.getY() + rectSize.getY()));
+  result = findNearestVector2f(result, collisionVector, lineStart);
+
+  collisionVector =
+      lineIntersect(lineStart, lineEnd,
+                    Vector2f(rectPos.getX(), rectPos.getY() + rectSize.getY()),
                     rectPos + rectSize);
   result = findNearestVector2f(result, collisionVector, lineStart);
 
   collisionVector =
-      lineIntersect(lineStart, lineEnd, Vector2f(rectPos.getX() + rectSize.getX(), rectPos.getY()),
+      lineIntersect(lineStart, lineEnd,
+                    Vector2f(rectPos.getX() + rectSize.getX(), rectPos.getY()),
                     rectPos + rectSize);
   result = findNearestVector2f(result, collisionVector, lineStart);
 
   return result;
 }
 
-Vector2f Level::lineIntersect(const Vector2f& lineStart1, const Vector2f& lineEnd1,
-                              const Vector2f& lineStart2, const Vector2f& lineEnd2)
+Vector2f Level::lineIntersect(const Vector2f& lineStart1,
+                              const Vector2f& lineEnd1,
+                              const Vector2f& lineStart2,
+                              const Vector2f& lineEnd2)
 {
   Vector2f line1 = lineEnd1 - lineStart1;
   Vector2f line2 = lineEnd2 - lineStart2;

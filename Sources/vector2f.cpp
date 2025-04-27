@@ -1,5 +1,5 @@
-#include "../Header/vector2f.h"
-#include "../Header/util.h"
+#include "util.h"
+#include "vector2f.h"
 #include <math.h>
 
 Vector2f& Vector2f::operator+=(const Vector2f& r)
@@ -65,7 +65,8 @@ Vector2f Vector2f::rotate(float angle)
   double cos = cosf(rad);
   double sin = sinf(rad);
 
-  Vector2f ret = Vector2f((float)(x * cos - y * sin), (float)(x * sin + y * cos));
+  Vector2f ret =
+      Vector2f((float)(x * cos - y * sin), (float)(x * sin + y * cos));
   return ret;
 }
 
